@@ -10,6 +10,11 @@ Sensor::Sensor(Platform* _ptrPlatform, int _sensor_ID, SensorSource _source)
 	this->unit = Units::Unit::Undefined;
 }
 
+int Sensor::getSensorID()
+{
+	return this->sensor_ID;
+}
+
 Units::Unit Sensor::getUnit()
 {
 	return this->unit;

@@ -1,3 +1,6 @@
+// Library effective with Windows
+#include "ProjectUtilities.h"
+
 #include "SimManager.h"
 #include "Sensor.h"
 #include "SensorFactory.h"
@@ -9,17 +12,17 @@ SimManager::SimManager()
 }
 
 void SimManager::Configure(){
-    timeStep = 0.100f;
+    this->cycleTimeStep_ms = 1000;
             
     this->platform = new Platform();
 
     SensorFactory* pSensorFactory = new SensorFactory(this->platform);
-    Sensor* pSensor = pSensorFactory->CreateSensor(0010, Platform::System_Property::ERIK_POS);
-
-    EriktestSensor = pSensor;
+    pSensorFactory->CreateSensorAndAddToPlatform(0010, Platform::System_Property::ERIK_POS);
 }
         
 void SimManager::StartRun(){
+    
+    EriktestSensor = this->platform->GetPtrToSensor(0010);
     
     PerformanceTimer cycleTimer;
     
@@ -31,7 +34,7 @@ void SimManager::StartRun(){
                 
         // TODO: call this->platform->updateDisturbance()
                 
-        this->platform->PropagateModelDeltaTime(this->timeStep);
+        this->platform->PropagateModelDeltaTime(this->cycleTimeStep_ms);
 
         // TODO: call SendSensorData()
 
@@ -45,13 +48,14 @@ void SimManager::StartRun(){
 
         // stop update timer: -----------------------------------------
         cycleTimer.Toc();
+        uint32_t cycleTimer_time_ms = uint32_t(cycleTimer.TimeInSeconds() * 1000.0f);
+        uint32_t remainingTimeToSleep_ms = this->cycleTimeStep_ms - cycleTimer_time_ms;
         
-        // TODO: sleep(this->timeStep - loopTime)
+        // sleep for remainder of time; this make its real time
+        sleepcp_ms(remainingTimeToSleep_ms);
 
         // Print loop time
-        float cycleTimer_time = cycleTimer.TimeInSeconds();
-        printf("LoopTime: %f ms \n", cycleTimer_time * 1000.0f);
-
+        printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
 
         printf("SensorData: %f m/s \n", EriktestSensor->getSensorMeasurement());
 

@@ -3,11 +3,11 @@
 
 // include
 #include <list>
-//#include "Sensor.h"
+#include "Sensor.h" //leave commented out to prevent circular references
 #include "Actuator.h"
 #include "PivotPoint.h"
 
-class Sensor;
+//class Sensor;
 
 class Platform
 {
@@ -26,8 +26,11 @@ public:
     void AddActuator(Actuator* a);
     void AddSensor(Sensor* s);
 
-    void PropagateModelDeltaTime(double timeStepSeconds);
+    void PropagateModelDeltaTime(uint32_t timeStep_ms);
 
+    Sensor* GetPtrToSensor(int _sensorID);
+    Actuator* GetPtrToActuator(int _actuatorID);
+    
     double ErikGetSystemPos();
     double ErikGetSystemVel();
 

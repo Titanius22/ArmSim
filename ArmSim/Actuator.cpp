@@ -18,6 +18,11 @@ double Actuator::getRealValue()
     return -1;
 }
 
+int Actuator::getActuatorID()
+{
+    return this->actuator_ID;
+}
+
 Units::Unit Actuator::getUnit()
 {
     return this->unit;

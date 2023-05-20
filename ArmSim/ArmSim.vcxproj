@@ -101,6 +101,7 @@
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="SensorFactory.cpp" />
     <ClCompile Include="Sensor_Actuator.cpp" />
+    <ClInclude Include="ProjectUtilities.h" />
     <ClInclude Include="Sensor_Actuator.h" />
     <ClCompile Include="Sensor_SystemProperties.cpp" />
     <ClCompile Include="SimManager.cpp" />

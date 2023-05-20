@@ -15,6 +15,8 @@ public:
         double _rotAxX, double _rotAxY, double _rotAxZ);
 
     double getRealValue();
+    
+    int getActuatorID();
     Units::Unit getUnit();
 
 private:

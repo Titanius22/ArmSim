@@ -78,5 +78,8 @@
     <ClInclude Include="Sensor_Actuator.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectUtilities.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

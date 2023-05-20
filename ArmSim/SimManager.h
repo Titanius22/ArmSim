@@ -7,7 +7,7 @@
 class SimManager
 {
 private:
-    float timeStep;
+    uint32_t cycleTimeStep_ms;
     Platform* platform;
 
 public:
