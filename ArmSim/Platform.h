@@ -12,10 +12,13 @@ class Sensor;
 class Platform
 {
 public:
-    enum System_Property {
+    enum class System_Property { // TODO: add units associated with the properties
         ARM_ANGLE,
         OtherStuff,
-        MoreStuff
+        MoreStuff,
+
+        ERIK_VEL,
+        ERIK_POS
     };
     
     Platform();
@@ -25,10 +28,16 @@ public:
 
     void PropagateModelDeltaTime(double timeStepSeconds);
 
+    double ErikGetSystemPos();
+    double ErikGetSystemVel();
+
 private:
     std::list<Actuator*> actuatorList;
     std::list<Sensor*> sensorList;
     PivotPoint pivotPoint;
+
+    double erikVel = 5;
+    double erikPos = 0;
 };
 
 #endif 

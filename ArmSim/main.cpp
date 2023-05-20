@@ -14,7 +14,7 @@ PerformanceTimer T1;
 
 int main()
 {
-	Trace::out("Num Particle: %.1e time:%.1f\n",(float)NUM_PARTICLES,MAX_LIFE);
+	//Trace::out("Num Particle: %.1e time:%.1f\n",(float)NUM_PARTICLES,MAX_LIFE);
 
 	srand(1);
 

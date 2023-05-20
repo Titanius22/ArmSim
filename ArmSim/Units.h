@@ -7,7 +7,7 @@
 class Units
 {
 public:
-    enum Unit {
+    enum class Unit {
         ZoomZoom,
         RollyRolly,
 

@@ -28,13 +28,16 @@
     <ClCompile Include="SimManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sensor_Actuator.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sensor_Actuator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sensor_SystemProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SensorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,6 +64,18 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Units.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sensor_SystemProperties.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SensorFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sensor_Actuator.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

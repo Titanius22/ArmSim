@@ -99,8 +99,10 @@
     <ClCompile Include="PivotPoint.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Sensor.cpp" />
+    <ClCompile Include="SensorFactory.cpp" />
     <ClCompile Include="Sensor_Actuator.cpp" />
-    <ClCompile Include="Sensor_Actuator.h" />
+    <ClInclude Include="Sensor_Actuator.h" />
+    <ClCompile Include="Sensor_SystemProperties.cpp" />
     <ClCompile Include="SimManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -109,8 +111,11 @@
     <ClInclude Include="PivotPoint.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Sensor.h" />
+    <ClInclude Include="SensorFactory.h" />
+    <ClInclude Include="Sensor_SystemProperties.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SimManager.h" />
+    <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

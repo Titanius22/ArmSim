@@ -9,7 +9,7 @@
 class Sensor
 {
 public:
-    enum SensorSource {
+    enum class SensorSource {
         ACTUATOR,
         SYSTEM_PROPERTY
     };
@@ -21,7 +21,7 @@ public:
     //////////////Sensor(int _sensor_ID, Platform::System_Property _systemProperty);
 
     Sensor() = delete; // We must call the special constructor
-    Sensor(int _sensor_ID);
+    Sensor(Platform* _ptrPlatform, int _sensor_ID, SensorSource _source);
 
     virtual double getSensorMeasurement() = 0;
     virtual double getRealValue() = 0;
@@ -37,6 +37,7 @@ public:
 
 protected:
      
+    Platform* ptrPlatform;
     int sensor_ID;
     SensorSource source;
     Units::Unit unit;

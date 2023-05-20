@@ -17,5 +17,15 @@ void Platform::AddSensor(Sensor* ptr)
 
 void Platform::PropagateModelDeltaTime(double timeStepSeconds)
 {
-	assert(timeStepSeconds);
+	this->erikPos += timeStepSeconds * this->erikVel;
+}
+
+double Platform::ErikGetSystemPos()
+{
+	return this->erikPos;
+}
+
+double Platform::ErikGetSystemVel()
+{
+	return this->erikVel;
 }

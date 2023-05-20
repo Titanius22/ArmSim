@@ -14,6 +14,8 @@ public:
     SimManager();
     void Configure();
     void StartRun();
+
+    Sensor* EriktestSensor;
 };
 
 #endif 

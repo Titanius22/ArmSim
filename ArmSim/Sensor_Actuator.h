@@ -3,16 +3,17 @@
 
 #include "Actuator.h"
 #include "Sensor.h"
+#include "Platform.h"
 
 
 class Sensor_Actuator : public Sensor
 {
 public:
-    // for Actuator
-    Sensor_Actuator(int _sensor_ID, Actuator& aPtr);
+    //Sensor_Actuator() = default; // throws compiler error
+    Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, Actuator& aPtr);
 
-    double getSensorMeasurement();
-    double getRealValue();
+    double getSensorMeasurement() override;
+    double getRealValue() override;
 
 
 private:
