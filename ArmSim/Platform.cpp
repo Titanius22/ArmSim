@@ -17,7 +17,7 @@ void Platform::AddSensor(Sensor* ptr)
 
 void Platform::PropagateModelDeltaTime(uint32_t timeStep_ms)
 {
-	double timeStep_sec = timeStep_ms * 1000.0f;
+	double timeStep_sec = double(timeStep_ms) / 1000.0f;
 	
 	// sum the forces to calculate vel change
 	double erikIsDumb_cantDoPhysics = 0;
