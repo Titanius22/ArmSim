@@ -10,6 +10,7 @@ public:
     enum class Unit {
         ZoomZoom,
         RollyRolly,
+        WavyWavy,
 
         Undefined
     };

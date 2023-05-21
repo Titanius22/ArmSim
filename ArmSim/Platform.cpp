@@ -17,6 +17,14 @@ void Platform::AddSensor(Sensor* ptr)
 
 void Platform::PropagateModelDeltaTime(uint32_t timeStep_ms)
 {
+	// sum the forces to calculate vel change
+	double erikIsDumb_cantDoPhysics = 0;
+	for (Actuator* actuator : this->actuatorList) {
+		erikIsDumb_cantDoPhysics += actuator->getCommandedActuationValue();
+	}
+	
+	this->erikVel += erikIsDumb_cantDoPhysics;
+
 	this->erikPos += (double(timeStep_ms) / double(1000)) * this->erikVel;
 }
 

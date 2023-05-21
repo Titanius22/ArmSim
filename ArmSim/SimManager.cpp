@@ -4,6 +4,7 @@
 #include "SimManager.h"
 #include "Sensor.h"
 #include "SensorFactory.h"
+#include "ActuatorFactory.h"
 
 
 SimManager::SimManager()
@@ -17,14 +18,22 @@ void SimManager::Configure(){
     this->platform = new Platform();
 
     SensorFactory* pSensorFactory = new SensorFactory(this->platform);
-    pSensorFactory->CreateSensorAndAddToPlatform(0010, Platform::System_Property::ERIK_POS);
-    pSensorFactory->CreateSensorAndAddToPlatform(0011, Platform::System_Property::ERIK_VEL);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0010, Platform::System_Property::ERIK_POS);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0011, Platform::System_Property::ERIK_VEL);
+    
+    ActuatorFactory* pActuatorFactory = new ActuatorFactory(this->platform);
+    pActuatorFactory->CreateActuator_AndAddToPlatform(
+        0010, 
+        0.0f, 1.0f, 2.0f,
+        1.0f, 0.0f, 0.0f);
+    this->platform->GetPtrToActuator(0010)->setCommandedActuationValue(2.0f);
 }
         
 void SimManager::StartRun(){
     
     Sensor* sensor1 = this->platform->GetPtrToSensor(0010);
     Sensor* sensor2 = this->platform->GetPtrToSensor(0011);
+    Actuator* actuator1 = this->platform->GetPtrToActuator(0010);
     
     PerformanceTimer cycleTimer;
     
@@ -59,7 +68,8 @@ void SimManager::StartRun(){
         // Print loop time
         printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
 
-        printf("Sensor1: %f m, Sensor2: %f m/s\n", sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement());
+        printf("Sensor1: %.0f m, Sensor2: %.0f m/s, Actuator1: %.0f m/s^2 \n", 
+            sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), actuator1->getCommandedActuationValue());
 
 
         // Reset timer: -----------------------------------------

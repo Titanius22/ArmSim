@@ -8,23 +8,23 @@ SensorFactory::SensorFactory(Platform* _platform)
 
 }
 
-void SensorFactory::CreateSensorAndAddToPlatform(int _sensor_ID, Actuator& aPtr)
+void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator& aPtr)
 {
 	Sensor* newSensor = new Sensor_Actuator(this->ptrPlatform, _sensor_ID, aPtr);
 	
 	this->ptrPlatform->AddSensor(newSensor);
 }
 
-void SensorFactory::CreateSensorAndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure)
+void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure)
 {
-	ptrToPlatformMethod funcPtrToReturn = this->get_PtrToFuncThatGetsSystemProperty(_propertyToMeasure);
+	Type_PtrToPlatformMethod funcPtrToReturn = this->get_PtrToFuncThatGetsSystemProperty(_propertyToMeasure);
 	
 	Sensor* newSensor = new Sensor_SystemProperties(this->ptrPlatform, _sensor_ID, _propertyToMeasure, funcPtrToReturn);
 	
 	this->ptrPlatform->AddSensor(newSensor);
 }
 
-ptrToPlatformMethod SensorFactory::get_PtrToFuncThatGetsSystemProperty(Platform::System_Property _propertyToMeasure)
+Type_PtrToPlatformMethod SensorFactory::get_PtrToFuncThatGetsSystemProperty(Platform::System_Property _propertyToMeasure)
 {
 	// TODO: need to make return type better
 	

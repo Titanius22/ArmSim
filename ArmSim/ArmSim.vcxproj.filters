@@ -43,6 +43,9 @@
     <ClCompile Include="Actuator_Linear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ActuatorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -85,5 +88,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Actuator_Linear.h" />
+    <ClInclude Include="ActuatorFactory.h" />
   </ItemGroup>
 </Project>

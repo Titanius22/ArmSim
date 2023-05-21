@@ -95,6 +95,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actuator.cpp" />
+    <ClCompile Include="ActuatorFactory.cpp" />
     <ClCompile Include="Actuator_Linear.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PivotPoint.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="SensorFactory.cpp" />
     <ClCompile Include="Sensor_Actuator.cpp" />
+    <ClInclude Include="ActuatorFactory.h" />
     <ClInclude Include="Actuator_Linear.h" />
     <ClInclude Include="ProjectUtilities.h" />
     <ClInclude Include="Sensor_Actuator.h" />

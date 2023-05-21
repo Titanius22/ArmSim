@@ -3,7 +3,7 @@
 Sensor_SystemProperties::Sensor_SystemProperties(
 	Platform* _ptrPlatform, int _sensor_ID, 
 	Platform::System_Property _propertyToMeasure, 
-	ptrToPlatformMethod funcPtr
+	Type_PtrToPlatformMethod funcPtr
 ) : 
 	Sensor(_ptrPlatform, _sensor_ID, 
 	SensorSource::SYSTEM_PROPERTY), 

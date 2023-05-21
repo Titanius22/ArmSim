@@ -11,14 +11,14 @@
 class Sensor_SystemProperties : public Sensor
 {
 public:
-    Sensor_SystemProperties(Platform* _ptrPlatform, int _sensor_ID, Platform::System_Property _propertyToMeasure, ptrToPlatformMethod funcPtr);
+    Sensor_SystemProperties(Platform* _ptrPlatform, int _sensor_ID, Platform::System_Property _propertyToMeasure, Type_PtrToPlatformMethod funcPtr);
 
     double getSensorMeasurement() override;
     double getRealValue() override;
 
 private:
     Platform::System_Property propertyToMeasure;
-    ptrToPlatformMethod ptrToPlatformMethodThatGetsSystemProperty;
+    Type_PtrToPlatformMethod ptrToPlatformMethodThatGetsSystemProperty;
 };
 
 #endif 

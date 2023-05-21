@@ -4,7 +4,6 @@
 #include "Sensor.h"
 #include "Actuator.h"
 #include "Platform.h"
-#include <functional>
 
 #include "TypeDefs.h"
 
@@ -15,11 +14,11 @@ public:
     SensorFactory() = delete;
     SensorFactory(Platform* _platform);
 
-    void CreateSensorAndAddToPlatform(int _sensor_ID, Actuator& aPtr);
-    void CreateSensorAndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure);
+    void CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator& aPtr);
+    void CreateSensor_AndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure);
 
 private:
-    ptrToPlatformMethod get_PtrToFuncThatGetsSystemProperty(Platform::System_Property _propertyToMeasure);
+    Type_PtrToPlatformMethod get_PtrToFuncThatGetsSystemProperty(Platform::System_Property _propertyToMeasure);
     
     Platform* ptrPlatform;
 };
