@@ -7,6 +7,7 @@
 
 class Platform; // added to prevent circular references
 
+
 class Sensor
 {
 public:
@@ -21,8 +22,8 @@ public:
     virtual double getSensorMeasurement() = 0;
     virtual double getRealValue() = 0;
     
-    virtual int getSensorID();
-    virtual Units::Unit getUnit();
+    int getSensorID();
+    Units::Unit getUnit();
     
 
 protected:

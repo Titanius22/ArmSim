@@ -3,3 +3,8 @@
 *.db-shm
 .vs/ArmSim/v16/Browse.VC.db
 .vs/ArmSim/v16/Browse.VC.db-wal
+/ArmSim/Debug
+*.exe
+*.pdb
+*.ipch
+.vs/ArmSim/v16/.suo

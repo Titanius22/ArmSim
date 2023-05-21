@@ -18,11 +18,13 @@ void SimManager::Configure(){
 
     SensorFactory* pSensorFactory = new SensorFactory(this->platform);
     pSensorFactory->CreateSensorAndAddToPlatform(0010, Platform::System_Property::ERIK_POS);
+    pSensorFactory->CreateSensorAndAddToPlatform(0011, Platform::System_Property::ERIK_VEL);
 }
         
 void SimManager::StartRun(){
     
-    EriktestSensor = this->platform->GetPtrToSensor(0010);
+    Sensor* sensor1 = this->platform->GetPtrToSensor(0010);
+    Sensor* sensor2 = this->platform->GetPtrToSensor(0011);
     
     PerformanceTimer cycleTimer;
     
@@ -57,7 +59,7 @@ void SimManager::StartRun(){
         // Print loop time
         printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
 
-        printf("SensorData: %f m/s \n", EriktestSensor->getSensorMeasurement());
+        printf("Sensor1: %f m, Sensor2: %f m/s\n", sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement());
 
 
         // Reset timer: -----------------------------------------

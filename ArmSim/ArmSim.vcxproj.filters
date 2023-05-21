@@ -40,6 +40,9 @@
     <ClCompile Include="SensorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Actuator_Linear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -81,5 +84,6 @@
     <ClInclude Include="ProjectUtilities.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Actuator_Linear.h" />
   </ItemGroup>
 </Project>
