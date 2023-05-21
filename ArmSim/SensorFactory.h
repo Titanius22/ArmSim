@@ -14,7 +14,7 @@ public:
     SensorFactory() = delete;
     SensorFactory(Platform* _platform);
 
-    void CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator& aPtr);
+    void CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator* aPtr);
     void CreateSensor_AndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure);
 
 private:

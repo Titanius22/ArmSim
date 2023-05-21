@@ -16,24 +16,26 @@ void SimManager::Configure(){
     this->cycleTimeStep_ms = 1000;
             
     this->platform = new Platform();
-
-    SensorFactory* pSensorFactory = new SensorFactory(this->platform);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0010, Platform::System_Property::ERIK_POS);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0011, Platform::System_Property::ERIK_VEL);
     
     ActuatorFactory* pActuatorFactory = new ActuatorFactory(this->platform);
     pActuatorFactory->CreateActuator_AndAddToPlatform(
-        0010, 
+        0000, 
         0.0f, 1.0f, 2.0f,
         1.0f, 0.0f, 0.0f);
-    this->platform->GetPtrToActuator(0010)->setCommandedActuationValue(2.0f);
+    this->platform->GetPtrToActuator(0000)->setCommandedActuationValue(2.0f);
+
+    SensorFactory* pSensorFactory = new SensorFactory(this->platform);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0000, Platform::System_Property::ERIK_POS);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0001, Platform::System_Property::ERIK_VEL);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0002, this->platform->GetPtrToActuator(0000));
 }
         
 void SimManager::StartRun(){
     
-    Sensor* sensor1 = this->platform->GetPtrToSensor(0010);
-    Sensor* sensor2 = this->platform->GetPtrToSensor(0011);
-    Actuator* actuator1 = this->platform->GetPtrToActuator(0010);
+    Sensor* sensor1 = this->platform->GetPtrToSensor(0000);
+    Sensor* sensor2 = this->platform->GetPtrToSensor(0001);
+    Sensor* sensor3 = this->platform->GetPtrToSensor(0002);
+    Actuator* actuator1 = this->platform->GetPtrToActuator(0000);
     
     PerformanceTimer cycleTimer;
     
@@ -68,8 +70,8 @@ void SimManager::StartRun(){
         // Print loop time
         printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
 
-        printf("Sensor1: %.0f m, Sensor2: %.0f m/s, Actuator1: %.0f m/s^2 \n", 
-            sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), actuator1->getCommandedActuationValue());
+        printf("Sensor1: %.0f m, Sensor2: %.0f m/s, Sensor3: %.0f m/s^2, Actuator1: %.0f m/s^2 \n", 
+            sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), sensor3->getSensorMeasurement(), actuator1->getCommandedActuationValue());
 
 
         // Reset timer: -----------------------------------------

@@ -1,7 +1,7 @@
 #include "Sensor_Actuator.h"
 
 // for Actuator
-Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, Actuator& aPtr)
+Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, Actuator* aPtr)
 	: Sensor(_ptrPlatform, _sensor_ID, SensorSource::ACTUATOR), ptrActuator(aPtr)
 {
 
@@ -10,10 +10,10 @@ Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, Actuato
 double Sensor_Actuator::getSensorMeasurement()
 {
 	// TODO: add latency, accuracy, etc...
-	return this->ptrActuator.getRealActuationValue();
+	return this->ptrActuator->getRealActuationValue();
 }
 
 double Sensor_Actuator::getRealValue()
 {
-	return this->ptrActuator.getRealActuationValue();
+	return this->ptrActuator->getRealActuationValue();
 }

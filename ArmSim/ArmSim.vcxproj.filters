@@ -11,40 +11,58 @@
     <Filter Include="_Lib">
       <UniqueIdentifier>{95a89fef-6150-4d1a-8a86-cf137faec390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sensor">
+      <UniqueIdentifier>{cf1c2277-315e-464a-b46a-7f6a7170301c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actuator">
+      <UniqueIdentifier>{bda10a91-2ef8-4425-9998-a410fec857fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Diagram">
+      <UniqueIdentifier>{548e755f-0654-49e8-a29e-00e7b06cc8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{eb7c5ef3-69aa-41fb-a8a3-2053134a150d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mechanics">
+      <UniqueIdentifier>{382c96af-a99b-40f2-8031-b0f218edbd96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Platform">
+      <UniqueIdentifier>{fbf79355-01cc-4d65-9470-b5c4089209b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actuator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PivotPoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SimManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sensor_Actuator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sensor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sensor</Filter>
+    </ClCompile>
+    <ClCompile Include="Sensor_Actuator.cpp">
+      <Filter>Source Files\Sensor</Filter>
     </ClCompile>
     <ClCompile Include="Sensor_SystemProperties.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sensor</Filter>
     </ClCompile>
     <ClCompile Include="SensorFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sensor</Filter>
+    </ClCompile>
+    <ClCompile Include="Actuator.cpp">
+      <Filter>Source Files\Actuator</Filter>
     </ClCompile>
     <ClCompile Include="Actuator_Linear.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Actuator</Filter>
     </ClCompile>
     <ClCompile Include="ActuatorFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Actuator</Filter>
+    </ClCompile>
+    <ClCompile Include="PivotPoint.cpp">
+      <Filter>Source Files\Mechanics</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\Platform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,40 +72,49 @@
     <ClInclude Include="..\Framework\Framework.h">
       <Filter>_Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Actuator.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="SimManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PivotPoint.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sensor.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Units.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sensor_SystemProperties.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SensorFactory.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeDefs.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sensor</Filter>
     </ClInclude>
     <ClInclude Include="Sensor_Actuator.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="Sensor_SystemProperties.h">
+      <Filter>Source Files\Sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="SensorFactory.h">
+      <Filter>Source Files\Sensor</Filter>
+    </ClInclude>
+    <ClInclude Include="Actuator.h">
+      <Filter>Source Files\Actuator</Filter>
+    </ClInclude>
+    <ClInclude Include="Actuator_Linear.h">
+      <Filter>Source Files\Actuator</Filter>
+    </ClInclude>
+    <ClInclude Include="ActuatorFactory.h">
+      <Filter>Source Files\Actuator</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Source Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Source Files\Misc</Filter>
     </ClInclude>
     <ClInclude Include="ProjectUtilities.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Actuator_Linear.h" />
-    <ClInclude Include="ActuatorFactory.h" />
+    <ClInclude Include="PivotPoint.h">
+      <Filter>Source Files\Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Source Files\Platform</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sensor_Actuator.cd">
+      <Filter>Source Files\Diagram</Filter>
+    </None>
   </ItemGroup>
 </Project>

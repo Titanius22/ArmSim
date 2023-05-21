@@ -1,4 +1,4 @@
-#include "Sensor.h"
+#include "Platform.h"
 
 Sensor::Sensor(Platform* _ptrPlatform, int _sensor_ID, SensorSource _source)
 {

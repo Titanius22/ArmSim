@@ -8,7 +8,7 @@ SensorFactory::SensorFactory(Platform* _platform)
 
 }
 
-void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator& aPtr)
+void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator* aPtr)
 {
 	Sensor* newSensor = new Sensor_Actuator(this->ptrPlatform, _sensor_ID, aPtr);
 	
