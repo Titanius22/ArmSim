@@ -5,6 +5,7 @@
 #include "Sensor.h"
 #include "SensorFactory.h"
 #include "ActuatorFactory.h"
+#include "PlatformController.h"
 
 
 SimManager::SimManager()
@@ -28,6 +29,8 @@ void SimManager::Configure(){
     pSensorFactory->CreateSensor_AndAddToPlatform(0000, Platform::System_Property::ERIK_POS);
     pSensorFactory->CreateSensor_AndAddToPlatform(0001, Platform::System_Property::ERIK_VEL);
     pSensorFactory->CreateSensor_AndAddToPlatform(0002, this->platform->GetPtrToActuator(0000));
+
+
 }
         
 void SimManager::StartRun(){
@@ -36,12 +39,28 @@ void SimManager::StartRun(){
     Sensor* sensor2 = this->platform->GetPtrToSensor(0001);
     Sensor* sensor3 = this->platform->GetPtrToSensor(0002);
     Actuator* actuator1 = this->platform->GetPtrToActuator(0000);
+
+    PlatformController platController = PlatformController(this->platform);
     
     PerformanceTimer cycleTimer;
     
+    
+    int cycleCount = 0;
+    float actuatorValue;
+    Command_Platform command(Command_Platform::CommanndType::DO_NOTHING); // will not get used, just so that "command" can get defined outside the loop
+
     // this is the main loop that handles each cycle
     while(true){
-                
+        if ((cycleCount > 0) && (cycleCount % 5 == 0))
+        {
+            actuatorValue = actuator1->getCommandedActuationValue();
+            command = Command_Platform(Command_Platform::CommanndType::CHANGE_ACTUATOR_VALUE, 0000, actuatorValue+1.0f);
+
+            platController.ReceiveCommand(&command);
+
+            command.GetActuatorValue();
+        }
+
         // start update timer ---------------------------------------
         cycleTimer.Tic();
                 
@@ -76,5 +95,7 @@ void SimManager::StartRun(){
 
         // Reset timer: -----------------------------------------
         cycleTimer.Reset();
+
+        cycleCount++;
     }
 }

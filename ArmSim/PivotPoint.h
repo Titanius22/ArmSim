@@ -9,12 +9,12 @@ class PivotPoint
 public:
     PivotPoint() = default; // TODO: "=delete" this later
     PivotPoint(
-        double _posX, double _posY, double _posZ,
-        double _rotAxX, double _rotAxY, double _rotAxZ);
+        float _posX, float _posY, float _posZ,
+        float _rotAxX, float _rotAxY, float _rotAxZ);
 
 private:
-    double posX, posY, posZ;
-    double rotAxX, rotAxY, rotAxZ;
+    float posX, posY, posZ;
+    float rotAxX, rotAxY, rotAxZ;
 
 };
 

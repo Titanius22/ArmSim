@@ -28,20 +28,19 @@ Type_PtrToPlatformMethod SensorFactory::get_PtrToFuncThatGetsSystemProperty(Plat
 {
 	// TODO: need to make return type better
 	
-	//TODO: change to use the C++11 version.....std::function<double (int, int)> func
-	double (Platform::*funcPtrToReturn)(void);
+	float (Platform::*funcPtrToReturn)(void);
 
 	switch (_propertyToMeasure) {
 		case Platform::System_Property::ERIK_POS:
 			funcPtrToReturn = &Platform::ErikGetSystemPos;
-			break; //optional
+			break;
 		case Platform::System_Property::ERIK_VEL:
 			funcPtrToReturn = &Platform::ErikGetSystemVel;
-			break; //optional
+			break;
 		case Platform::System_Property::ARM_ANGLE:
 		case Platform::System_Property::OtherStuff:
 		case Platform::System_Property::MoreStuff:
-		default: //Optional
+		default:
 			funcPtrToReturn = NULL;
 			assert(false);
 	}

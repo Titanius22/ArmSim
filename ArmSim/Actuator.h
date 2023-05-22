@@ -20,25 +20,25 @@ public:
     
     Actuator() = delete; // We must call the special constructor
     Actuator(
-        Platform* _ptrPlatform, int _actuator_ID, ActuatorType _actuatorType,
-        double _posX, double _posY, double _posZ
+        Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,
+        float _posX, float _posY, float _posZ
     );
 
-    double getCommandedActuationValue();
-    void setCommandedActuationValue(double newVal);
-    virtual double getRealActuationValue() = 0;
+    float getCommandedActuationValue();
+    void setCommandedActuationValue(float newVal);
+    virtual float getRealActuationValue() = 0;
     
-    int getActuatorID();
+    uint8_t getActuatorID();
     Units::Unit getUnit();
 
 protected:
     Platform* ptrPlatform;
-    int actuator_ID;
+    uint8_t actuator_ID;
     ActuatorType actuatorType;
     
-    double posX, posY, posZ;
+    float posX, posY, posZ;
 
-    double actuationValue;
+    float actuationValue; // maps to Command_Platform data
     Units::Unit unit;
     
 };

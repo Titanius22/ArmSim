@@ -11,14 +11,14 @@ class Actuator_Linear : public Actuator
 public:    
     Actuator_Linear() = delete;
     Actuator_Linear(
-        Platform* _ptrPlatform, int _actuator_ID, ActuatorType _actuatorType,
-        double _posX, double _posY, double _posZ,
-        double _forceVecX, double _forceVecY, double _forceVecZ);
+        Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,
+        float _posX, float _posY, float _posZ,
+        float _forceVecX, float _forceVecY, float _forceVecZ);
 
-    double getRealActuationValue() override;
+    float getRealActuationValue() override;
 
 private:
-    double forceVecX, forceVecY, forceVecZ;
+    float forceVecX, forceVecY, forceVecZ;
 };
 
 #endif 

@@ -10,9 +10,9 @@ public:
     ActuatorFactory(Platform* _platform);
 
     void CreateActuator_AndAddToPlatform( // Actuator_Linear
-        int _actuator_ID,
-        double _posX, double _posY, double _posZ,
-        double _forceVecX, double _forceVecY, double _forceVecZ);
+        uint8_t _actuator_ID,
+        float _posX, float _posY, float _posZ,
+        float _forceVecX, float _forceVecY, float _forceVecZ);
 
 private:    
     Platform* ptrPlatform;

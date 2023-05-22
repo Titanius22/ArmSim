@@ -31,16 +31,16 @@ public:
     Sensor* GetPtrToSensor(int _sensorID);
     Actuator* GetPtrToActuator(int _actuatorID);
     
-    double ErikGetSystemPos();
-    double ErikGetSystemVel();
+    float ErikGetSystemPos();
+    float ErikGetSystemVel();
 
 private:
     std::list<Actuator*> actuatorList;
     std::list<Sensor*> sensorList;
     PivotPoint pivotPoint;
 
-    double erikVel = 5;
-    double erikPos = 0;
+    float erikVel = 5;
+    float erikPos = 0;
 };
 
 #endif 

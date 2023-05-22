@@ -29,6 +29,9 @@
     <Filter Include="Source Files\Platform">
       <UniqueIdentifier>{fbf79355-01cc-4d65-9470-b5c4089209b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Commanding">
+      <UniqueIdentifier>{6a145761-f18a-44b3-bdb7-933d5dca171e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +66,12 @@
     </ClCompile>
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformController.cpp">
+      <Filter>Source Files\Commanding</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Platform.cpp">
+      <Filter>Source Files\Commanding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Source Files\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformController.h">
+      <Filter>Source Files\Commanding</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Platform.h">
+      <Filter>Source Files\Commanding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
