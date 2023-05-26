@@ -232,11 +232,11 @@
 #pragma warning( disable : 5039 ) // function': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception.
 #pragma warning( disable : 5045 ) // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 #pragma warning( disable : 6011 ) // dereferencing NULL pointer <name>
-#pragma warning( disable : 5204 ) // 'type-name': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-#pragma warning( disable : 5220 ) // 'name': a non-static data member with a volatile qualified type no longer implies that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+//#pragma warning( disable : 5204 ) // 'type-name': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+//#pragma warning( disable : 5220 ) // 'name': a non-static data member with a volatile qualified type no longer implies that compiler generated copy/move constructors and copy/move assignment operators are not trivial
 #pragma warning( disable : 26812 ) // Prefer 'enum class' over 'enum' (Enum.3)
 #pragma warning( disable : 4296 ) // >=: expression always true (handle.GetIndex() >= 0)
-#pragma warning( disable : 5205 ) // delete of an abstract class 'IXAudio2VoiceCallback' that has a non - virtual destructor results in undefined behavior	GameEngine	C : \code\keenan2022spring_csc588\instructor\Lecture\Week_05\6.3_Snd_App - Voice\src\Voice\Voice.cpp	55
+//#pragma warning( disable : 5205 ) // delete of an abstract class 'IXAudio2VoiceCallback' that has a non - virtual destructor results in undefined behavior	GameEngine	C : \code\keenan2022spring_csc588\instructor\Lecture\Week_05\6.3_Snd_App - Voice\src\Voice\Voice.cpp	55
 
 #include "ProjectSettings.h"
 
