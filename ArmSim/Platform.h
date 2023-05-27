@@ -13,12 +13,12 @@ class Platform
 {
 public:
     enum class System_Property { // TODO: add units associated with the properties
-        ARM_ANGLE,
         OtherStuff,
         MoreStuff,
 
-        ERIK_VEL,
-        ERIK_POS
+        ANG_VEL,
+        ANG_POS,
+		ANG_ACC
     };
     
     Platform();
@@ -31,8 +31,9 @@ public:
     Sensor* GetPtrToSensor(int _sensorID);
     Actuator* GetPtrToActuator(int _actuatorID);
     
-    float ErikGetSystemPos();
-    float ErikGetSystemVel();
+    float GetSystemPos();
+    float GetSystemVel();
+	float GetSystemAcc();
 
 private:
     std::list<Actuator*> actuatorList;
@@ -41,6 +42,13 @@ private:
 
     float erikVel = 5;
     float erikPos = 0;
+
+	float ang_acc;
+	float ang_pos;
+	float ang_vel;
+	
+	float l;
+	float const g = 9.81f;
 };
 
 #endif 

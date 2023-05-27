@@ -14,7 +14,7 @@ SimManager::SimManager()
 }
 
 void SimManager::Configure(){
-    this->cycleTimeStep_ms = 1000;
+    this->cycleTimeStep_ms = 10;
             
     this->platform = new Platform();
     
@@ -26,9 +26,10 @@ void SimManager::Configure(){
     this->platform->GetPtrToActuator(0000)->setCommandedActuationValue(2.0f);
 
     SensorFactory* pSensorFactory = new SensorFactory(this->platform);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0000, Platform::System_Property::ERIK_POS);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0001, Platform::System_Property::ERIK_VEL);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0002, this->platform->GetPtrToActuator(0000));
+	pSensorFactory->CreateSensor_AndAddToPlatform(0000, Platform::System_Property::ANG_POS);
+	pSensorFactory->CreateSensor_AndAddToPlatform(0001, Platform::System_Property::ANG_VEL);
+	pSensorFactory->CreateSensor_AndAddToPlatform(0002, Platform::System_Property::ANG_ACC);
+    //pSensorFactory->CreateSensor_AndAddToPlatform(0002, this->platform->GetPtrToActuator(0000));
 
 
 }
@@ -38,7 +39,7 @@ void SimManager::StartRun(){
     Sensor* sensor1 = this->platform->GetPtrToSensor(0000);
     Sensor* sensor2 = this->platform->GetPtrToSensor(0001);
     Sensor* sensor3 = this->platform->GetPtrToSensor(0002);
-    Actuator* actuator1 = this->platform->GetPtrToActuator(0000);
+    //Actuator* actuator1 = this->platform->GetPtrToActuator(0000);
 
     PlatformController platController = PlatformController(this->platform);
     
@@ -46,12 +47,12 @@ void SimManager::StartRun(){
     
     
     int cycleCount = 0;
-    float actuatorValue;
+    //float actuatorValue;
     Command_Platform command(Command_Platform::CommanndType::DO_NOTHING); // will not get used, just so that "command" can get defined outside the loop
 
     // this is the main loop that handles each cycle
     while(true){
-        if ((cycleCount > 0) && (cycleCount % 5 == 0))
+        /*if ((cycleCount > 0) && (cycleCount % 5 == 0))
         {
             actuatorValue = actuator1->getCommandedActuationValue();
             command = Command_Platform(Command_Platform::CommanndType::CHANGE_ACTUATOR_VALUE, 0000, actuatorValue+1.0f);
@@ -59,7 +60,7 @@ void SimManager::StartRun(){
             platController.ReceiveCommand(&command);
 
             command.GetActuatorValue();
-        }
+        }*/
 
         // start update timer ---------------------------------------
         cycleTimer.Tic();
@@ -87,11 +88,13 @@ void SimManager::StartRun(){
         sleepcp_ms(remainingTimeToSleep_ms);
 
         // Print loop time
-        printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
+        //printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
 
-        printf("Sensor1: %.0f m, Sensor2: %.0f m/s, Sensor3: %.0f m/s^2, Actuator1: %.0f m/s^2 \n", 
-            sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), sensor3->getSensorMeasurement(), actuator1->getCommandedActuationValue());
-
+		if ((cycleCount > 0) && (cycleCount % 20 == 0))
+		{
+			printf("Sensor1: %.4f m, Sensor2: %.4f m/s, Sensor3: %.4f m/s^2\n", // , Actuator1: % .0f m / s ^ 2 \n",
+				sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), sensor3->getSensorMeasurement()); // , actuator1->getCommandedActuationValue());
+		}
 
         // Reset timer: -----------------------------------------
         cycleTimer.Reset();
