@@ -15,6 +15,10 @@ public:
 
 private:
      
+    int StartServer();
+    void HandleCommands();
+    
+    
     Platform* ptrPlatform;
     
 };

@@ -67,10 +67,10 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="PlatformController.cpp">
+    <ClCompile Include="Command_Platform.cpp">
       <Filter>Source Files\Commanding</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Platform.cpp">
+    <ClCompile Include="PlatformController.cpp">
       <Filter>Source Files\Commanding</Filter>
     </ClCompile>
   </ItemGroup>
