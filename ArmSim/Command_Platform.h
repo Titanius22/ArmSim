@@ -10,6 +10,8 @@ public:
         DO_NOTHING = 0,
         CHANGE_ACTUATOR_VALUE = 1
     };
+
+    const static int COMMAND_SIZE_BYTES = (2 * 32) / 8;
     
     // Big four
     Command_Platform() = delete; // We must call the special constructor
@@ -28,7 +30,6 @@ public:
 
 private:
      
-    const static int COMMAND_SIZE_BYTES = (2*32) / 8;
     uint8_t binCmd[COMMAND_SIZE_BYTES];
     /*
     First 32 bits

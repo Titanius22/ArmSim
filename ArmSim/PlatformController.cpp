@@ -23,13 +23,19 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 #define DEFAULT_PORT "27015"
-#define DEFAULT_BUFLEN_BYTE (64/8)+5 // "+5" is for margin
 
 PlatformController::PlatformController(Platform* _ptrPlatform)
 {
 	this->ptrPlatform = _ptrPlatform;
+	this->ClientSocket = INVALID_SOCKET;
 
 	this->StartServer();
+	this->HandleCommands();
+}
+
+PlatformController::~PlatformController()
+{
+	this->ShutdownServer();
 }
 
 void PlatformController::ReceiveCommand(Command_Platform* command)
@@ -60,11 +66,6 @@ int PlatformController::StartServer()
 	int iResult;
 
 	SOCKET ListenSocket = INVALID_SOCKET;
-	SOCKET ClientSocket = INVALID_SOCKET;
-
-	int iSendResult = 0;
-	char recvbuf[DEFAULT_BUFLEN_BYTE]; // char and uint8_t is the same data size
-	int recvbuflen = DEFAULT_BUFLEN_BYTE;
 
 	struct addrinfo* result = NULL;
 	struct addrinfo hints;
@@ -134,11 +135,23 @@ int PlatformController::StartServer()
 	// No longer need server socket
 	closesocket(ListenSocket);
 
+	return 0;
+}
+
+int PlatformController::HandleCommands()
+{
+	int iResult;
+	int iSendResult = 0;
+
+	char recvbuf[Command_Platform::COMMAND_SIZE_BYTES]; // char and uint8_t is the same data size
+	int recvbuflen = Command_Platform::COMMAND_SIZE_BYTES;
+	
 	// Receive until the peer shuts down the connection
 	do {
 
 		iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
 		if (iResult > 0) {
+
 			printf("Bytes received: %d\n", iResult);
 
 			// Echo the buffer back to the sender
@@ -162,6 +175,13 @@ int PlatformController::StartServer()
 
 	} while (iResult > 0);
 
+	return 0;
+}
+
+int PlatformController::ShutdownServer()
+{
+	int iResult;
+	
 	// shutdown the connection since we're done
 	iResult = shutdown(ClientSocket, SD_SEND);
 	if (iResult == SOCKET_ERROR) {
@@ -177,16 +197,6 @@ int PlatformController::StartServer()
 
 	return 0;
 }
-
-void PlatformController::HandleCommands()
-{
-
-}
-
-
-
-// https://github.com/gruberchris/WinsockDemo
-// https://www.tenouk.com/Winsock/Winsock2example9.html
 
 
 
