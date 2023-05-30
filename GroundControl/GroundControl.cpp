@@ -1,15 +1,18 @@
 // GroundControl.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-
 #define WIN32_LEAN_AND_MEAN
 
+#include <iostream>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+#include <string>
+#include <cassert>
 #include "GroundControl.h"
+#include "../ArmSim/Command_Platform.h"
 
 
 #pragma comment (lib, "Ws2_32.lib")
@@ -17,35 +20,87 @@
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
 
-
-
-
-int main()
+GroundControl::GroundControl()
 {
-    char ipAdress[] = "localhost";
-    //char port[] = "27015";
-    char dummy[500];
-
-    // cause system to wait
-    std::cout << "Press ENTER when ready..."; // Type a number and press enter
-    std::cin >> dummy; // Get user input from the keyboard
-
-
-    return GroundControl::clientTest(ipAdress);
+    const char ipAdress[] = "localhost";
+    this->ConnectSocket = INVALID_SOCKET;
+    
+    this->SetUpClient(ipAdress);
 }
 
+GroundControl::~GroundControl()
+{
+    this->ShutDownClient();
+}
 
-int GroundControl::clientTest(char* ipAdress)
+void GroundControl::Start()
+{
+    //char port[] = "27015";
+    char sendBuffer[500];
+    int remainingChars = 0;
+    std::string tmpStr;
+    std::vector<std::string> tmpVtr;
+    std::string const delimiter = ",";
+
+    Command_Platform newCmd = Command_Platform(Command_Platform::CommanndType::DO_NOTHING);
+    
+    while (true) {
+
+        // cause system to wait
+        std::cout << "Enter comma separated command parameters...\n"; // Type a number and press enter
+        std::cin >> sendBuffer; // Get user input from the keyboard
+
+        tmpVtr.clear();
+        tmpStr = sendBuffer;
+        
+        remainingChars = strlen(sendBuffer);
+
+        //https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+        size_t pos = 0;
+        while ((pos = tmpStr.find(delimiter)) != std::string::npos) {
+            tmpVtr.push_back(tmpStr.substr(0, pos));
+            tmpStr.erase(0, pos + delimiter.length());
+        }
+        if (!tmpStr.empty())
+        {
+            tmpVtr.push_back(tmpStr);
+        }
+
+        // TODO: made smarter
+        if (tmpVtr.size() == 1)
+        {
+            // Command_Platform::CommanndType::DO_NOTHING
+            newCmd = Command_Platform(Command_Platform::CommanndType::DO_NOTHING);
+        }
+        else if (tmpVtr.size() == 3)
+        {
+            Command_Platform::CommanndType tempCmdType = (Command_Platform::CommanndType)std::stoi(tmpVtr.at(0));
+            uint8_t accNum = (uint8_t)std::stoi(tmpVtr.at(1));
+            float accValue = std::stof(tmpVtr.at(2));
+            
+            
+            // Command_Platform::CommanndType::CHANGE_ACTUATOR_VALUE;
+            newCmd = Command_Platform(
+                tempCmdType,
+                accNum,
+                accValue);
+        }
+        else 
+        {
+            assert(false); // TODO: need to handle
+        }
+        
+        this->UserCmdSending(&newCmd);
+    }
+}
+
+int GroundControl::SetUpClient(const char* ipAdress)
 {
     WSADATA wsaData;
-    SOCKET ConnectSocket = INVALID_SOCKET;
     struct addrinfo* result = NULL,
         * ptr = NULL,
         hints;
-    const char* sendbuf = "this is a test";
-    char recvbuf[DEFAULT_BUFLEN];
     int iResult;
-    int recvbuflen = DEFAULT_BUFLEN;
 
     //printf("usage: %s server-name\n", ipAdress);
 
@@ -73,23 +128,28 @@ int GroundControl::clientTest(char* ipAdress)
     for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
 
         // Create a SOCKET for connecting to server
-        ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype,
-            ptr->ai_protocol);
-        if (ConnectSocket == INVALID_SOCKET) {
+        this->ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+        if (this->ConnectSocket == INVALID_SOCKET) {
             printf("socket failed with error: %ld\n", WSAGetLastError());
             WSACleanup();
             return 1;
         }
 
         // Connect to server.
-        iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
+        iResult = connect(this->ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
         if (iResult == SOCKET_ERROR) {
-            closesocket(ConnectSocket);
-            ConnectSocket = INVALID_SOCKET;
+            closesocket(this->ConnectSocket);
+            this->ConnectSocket = INVALID_SOCKET;
             continue;
         }
         break;
     }
+    if (this->ConnectSocket == INVALID_SOCKET)
+    {
+        // TODO: resolve problem
+        assert(false);
+    }
+
 
     // Should really try the next address returned by getaddrinfo
     // if the connect call failed
@@ -98,50 +158,51 @@ int GroundControl::clientTest(char* ipAdress)
 
     freeaddrinfo(result);
 
-    if (ConnectSocket == INVALID_SOCKET) {
+    if (this->ConnectSocket == INVALID_SOCKET) {
         printf("Unable to connect to server!\n");
         WSACleanup();
         return 1;
     }
 
+	return 0;
+}
+
+int GroundControl::UserCmdSending(Command_Platform* pCmd)
+{
+    int iResult;
+    
     // Send an initial buffer
-    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    iResult = send(this->ConnectSocket, (const char *)pCmd->GetCommandBits(), Command_Platform::COMMAND_SIZE_BYTES, 0);
     if (iResult == SOCKET_ERROR) {
         printf("send failed with error: %d\n", WSAGetLastError());
-        closesocket(ConnectSocket);
+        closesocket(this->ConnectSocket);
         WSACleanup();
         return 1;
     }
 
     printf("Bytes Sent: %ld\n", iResult);
 
+    return 0;
+}
+
+int GroundControl::ShutDownClient()
+{
+    int iResult;
+    
     // shutdown the connection since no more data will be sent
-    iResult = shutdown(ConnectSocket, SD_SEND);
+    iResult = shutdown(this->ConnectSocket, SD_SEND);
     if (iResult == SOCKET_ERROR) {
         printf("shutdown failed with error: %d\n", WSAGetLastError());
-        closesocket(ConnectSocket);
+        closesocket(this->ConnectSocket);
         WSACleanup();
         return 1;
     }
 
-    // Receive until the peer closes the connection
-    do {
-
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if (iResult > 0)
-            printf("Bytes received: %d\n", iResult);
-        else if (iResult == 0)
-            printf("Connection closed\n");
-        else
-            printf("recv failed with error: %d\n", WSAGetLastError());
-
-    } while (iResult > 0);
-
     // cleanup
-    closesocket(ConnectSocket);
+    closesocket(this->ConnectSocket);
     WSACleanup();
 
-	return 0;
+    return 0;
 }
 
 

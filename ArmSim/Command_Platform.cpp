@@ -1,4 +1,5 @@
 #include "Command_Platform.h"
+#include <cstring>
 
 ////////////////////////////////////////
 // Public
@@ -21,25 +22,30 @@ Command_Platform::Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, 
 	this->setActuatorValue(_actuatorValue);
 }
 
-Command_Platform::CommanndType Command_Platform::GetCommandType()
+Command_Platform::CommanndType Command_Platform::GetCommandType() const
 {
 	uint8_t* pData = (uint8_t*)this->binCmd;
 
 	return (Command_Platform::CommanndType)pData[0];
 }
 
-uint8_t Command_Platform::GetActuatorID()
+uint8_t Command_Platform::GetActuatorID() const
 {
 	uint8_t* pData = (uint8_t*)this->binCmd;
 
 	return pData[1];
 }
 
-float Command_Platform::GetActuatorValue()
+float Command_Platform::GetActuatorValue() const
 {
 	float* pData = (float*)this->binCmd;
 
 	return pData[1];
+}
+
+const void* Command_Platform::GetCommandBits() const
+{
+	return this->binCmd;
 }
 
 ////////////////////////////////////////

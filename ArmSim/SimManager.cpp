@@ -75,7 +75,7 @@ void SimManager::StartRun(){
         // TODO: run visualizer
 
         // TODO: handle_commands()
-
+        platController.HandleCommands();
 
 
         // stop update timer: -----------------------------------------

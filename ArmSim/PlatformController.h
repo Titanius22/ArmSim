@@ -14,12 +14,12 @@ public:
     PlatformController(Platform* _ptrPlatform);
     ~PlatformController();
 
-    void ReceiveCommand(Command_Platform* _command);    
+    void ReceiveCommand(Command_Platform* _command);
+    int HandleCommands();
 
 private:
      
     int StartServer();
-    int HandleCommands();
     int ShutdownServer();
 
     Platform* ptrPlatform;

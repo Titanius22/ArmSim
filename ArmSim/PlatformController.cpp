@@ -30,7 +30,6 @@ PlatformController::PlatformController(Platform* _ptrPlatform)
 	this->ClientSocket = INVALID_SOCKET;
 
 	this->StartServer();
-	this->HandleCommands();
 }
 
 PlatformController::~PlatformController()
@@ -131,6 +130,21 @@ int PlatformController::StartServer()
 		WSACleanup();
 		return 1;
 	}
+	else
+	{
+		printf("Connect to a client...\n");
+	}
+
+	// Set Socket into non-blocking mode so that recv() can be called and 
+	// it returns if no data is available
+	unsigned long ul = 1;
+	iResult = ioctlsocket(ClientSocket, FIONBIO, (unsigned long*)&ul);
+	if (iResult == SOCKET_ERROR)
+	{
+		printf("Failed to put the socket into non-blocking mode\n");
+		assert(false);
+		return 1;
+	}
 
 	// No longer need server socket
 	closesocket(ListenSocket);
@@ -141,7 +155,6 @@ int PlatformController::StartServer()
 int PlatformController::HandleCommands()
 {
 	int iResult;
-	int iSendResult = 0;
 
 	char recvbuf[Command_Platform::COMMAND_SIZE_BYTES]; // char and uint8_t is the same data size
 	int recvbuflen = Command_Platform::COMMAND_SIZE_BYTES;
@@ -152,25 +165,41 @@ int PlatformController::HandleCommands()
 		iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
 		if (iResult > 0) {
 
-			printf("Bytes received: %d\n", iResult);
+			printf("Received Command...\n");
 
-			// Echo the buffer back to the sender
-			iSendResult = send(ClientSocket, recvbuf, iResult, 0);
-			if (iSendResult == SOCKET_ERROR) {
-				printf("send failed: %d\n", WSAGetLastError());
-				closesocket(ClientSocket);
-				WSACleanup();
-				return 1;
-			}
-			printf("Bytes sent: %d\n", iSendResult);
+			Command_Platform receivedCmd(recvbuf); // constructor
+
+			this->ReceiveCommand(&receivedCmd);
+
+			//// Echo the buffer back to the sender
+			//iSendResult = send(ClientSocket, recvbuf, iResult, 0);
+			//if (iSendResult == SOCKET_ERROR) {
+			//	printf("send failed: %d\n", WSAGetLastError());
+			//	closesocket(ClientSocket);
+			//	WSACleanup();
+			//	return 1;
+			//}
+			//printf("Bytes sent: %d\n", iSendResult);
 		}
 		else if (iResult == 0)
-			printf("Connection closing...\n");
-		else {
-			printf("recv failed: %d\n", WSAGetLastError());
-			closesocket(ClientSocket);
-			WSACleanup();
-			return 1;
+		{
+			// this should never occur. recv() doesn't return 0
+			assert(false);
+		}
+		else
+		{
+			int errorCode = WSAGetLastError();
+			if (errorCode == WSAEWOULDBLOCK)
+			{
+				printf("~~~No commands to receive~~~\n\n");
+			}			
+			else {
+				printf("recv failed: %d\n", errorCode);
+				closesocket(ClientSocket);
+				WSACleanup();
+				assert(false); //TODO: How should this be handled
+				return 1;
+			}
 		}
 
 	} while (iResult > 0);
