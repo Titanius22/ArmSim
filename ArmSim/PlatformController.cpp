@@ -39,6 +39,8 @@ PlatformController::~PlatformController()
 
 void PlatformController::ReceiveCommand(Command_Platform* command)
 {
+	
+	
 	Command_Platform::CommanndType commandType = command->GetCommandType();
 	if (commandType == Command_Platform::CommanndType::DO_NOTHING)
 	{

@@ -10,3 +10,6 @@
 .vs/ArmSim/v16/.suo
 Debug
 Debug
+*.db
+*.db-wal
+*.db
