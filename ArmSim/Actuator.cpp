@@ -19,6 +19,11 @@ Actuator::Actuator(
     this->unit = Units::Unit::Undefined;
 }
 
+Actuator::~Actuator()
+{
+
+}
+
 float Actuator::getCommandedActuationValue()
 {
     return this->actuationValue;

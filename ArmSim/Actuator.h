@@ -18,6 +18,7 @@ public:
         KICK
     };
     
+    virtual ~Actuator() = 0;
     Actuator() = delete; // We must call the special constructor
     Actuator(
         Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,

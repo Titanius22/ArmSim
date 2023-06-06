@@ -2,6 +2,7 @@
 #define COMMAND_PLATFORM_H
 
 // include
+#include <stdint.h>
 
 class Command_Platform
 {
@@ -10,6 +11,8 @@ public:
         DO_NOTHING = 0,
         CHANGE_ACTUATOR_VALUE = 1
     };
+
+    const static int COMMAND_SIZE_BYTES = (2 * 32) / 8;
     
     // Big four
     Command_Platform() = delete; // We must call the special constructor
@@ -22,13 +25,14 @@ public:
     Command_Platform(CommanndType _cmdType); // DO_NOTHING
     Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, float _actuatorValue); // CHANGE_ACTUATOR_VALUE
 
-    CommanndType GetCommandType();
-    uint8_t GetActuatorID();
-    float GetActuatorValue();
+    CommanndType GetCommandType() const;
+    uint8_t GetActuatorID() const;
+    float GetActuatorValue() const;
+
+    const void* GetCommandBits() const;
 
 private:
      
-    const static int COMMAND_SIZE_BYTES = (2*32) / 8;
     uint8_t binCmd[COMMAND_SIZE_BYTES];
     /*
     First 32 bits

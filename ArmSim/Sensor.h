@@ -18,6 +18,7 @@ public:
 
     Sensor() = delete; // We must call the special constructor
     Sensor(Platform* _ptrPlatform, int _sensor_ID, SensorSource _source);
+    virtual ~Sensor() = 0;
 
     virtual float getSensorMeasurement() = 0;
     virtual float getRealValue() = 0;
