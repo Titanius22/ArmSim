@@ -2,6 +2,7 @@
 #define ACTUATORFACTORY_H
 
 #include "Platform.h"
+#include <string>
 
 class ActuatorFactory
 {
@@ -10,7 +11,7 @@ public:
     ActuatorFactory(Platform* _platform);
 
     void CreateActuator_AndAddToPlatform( // Actuator_Linear
-        uint8_t _actuator_ID,
+        uint8_t _actuator_ID, std::string _name,
         float _posX, float _posY, float _posZ,
         float _forceVecX, float _forceVecY, float _forceVecZ);
 

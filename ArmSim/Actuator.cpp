@@ -1,13 +1,16 @@
 #include "Actuator.h"
+#include <string>
 
 
 Actuator::Actuator(
-    Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,
+    Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name,
+    ActuatorType _actuatorType,
     float _posX, float _posY, float _posZ)
 {
     this->ptrPlatform = _ptrPlatform;
     this->actuator_ID = _actuator_ID;
     //TODO: add check against existing actuator_IDs
+    this->name = _name;
 
     this->actuatorType = _actuatorType;
 
@@ -37,6 +40,11 @@ void Actuator::setCommandedActuationValue(float newVal)
 uint8_t Actuator::getActuatorID()
 {
     return this->actuator_ID;
+}
+
+std::string Actuator::GetName()
+{
+    return this->name;
 }
 
 Units::Unit Actuator::getUnit()

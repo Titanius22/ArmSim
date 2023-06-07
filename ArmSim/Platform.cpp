@@ -1,8 +1,9 @@
+#include <string>
 #include "Platform.h"
 
-Platform::Platform()
+Platform::Platform(std::string _name)
 {
-
+	this->name = _name;
 }
 
 void Platform::AddActuator(Actuator* ptr)
@@ -62,7 +63,10 @@ Actuator* Platform::GetPtrToActuator(int _actuatorID)
 	return returnPtr;
 }
 
-
+std::string Platform::GetName()
+{
+	return this->name;
+}
 
 float Platform::ErikGetSystemPos()
 {
