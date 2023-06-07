@@ -4,6 +4,7 @@
 // include
 #include "Units.h"
 #include "Actuator.h"
+#include <string>
 
 
 class Actuator_Linear : public Actuator
@@ -11,7 +12,7 @@ class Actuator_Linear : public Actuator
 public:    
     Actuator_Linear() = delete;
     Actuator_Linear(
-        Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,
+        Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name, ActuatorType _actuatorType,
         float _posX, float _posY, float _posZ,
         float _forceVecX, float _forceVecY, float _forceVecZ);
 

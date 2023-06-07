@@ -1,8 +1,9 @@
 #include "Sensor_Actuator.h"
+#include <string>
 
 // for Actuator
-Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, Actuator* aPtr)
-	: Sensor(_ptrPlatform, _sensor_ID, SensorSource::ACTUATOR), ptrActuator(aPtr)
+Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, std::string _name, Actuator* aPtr)
+	: Sensor(_ptrPlatform, _sensor_ID, _name, SensorSource::ACTUATOR), ptrActuator(aPtr)
 {
 
 }

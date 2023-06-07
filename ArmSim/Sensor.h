@@ -2,6 +2,7 @@
 #define SENSOR_H
 
 // include
+#include <string>
 //#include "Platform.h" //leave commented out to prevent circular references
 #include "Units.h"
 
@@ -17,13 +18,14 @@ public:
     };
 
     Sensor() = delete; // We must call the special constructor
-    Sensor(Platform* _ptrPlatform, int _sensor_ID, SensorSource _source);
+    Sensor(Platform* _ptrPlatform, int _sensor_ID, std::string _name, SensorSource _source);
     virtual ~Sensor() = 0;
 
     virtual float getSensorMeasurement() = 0;
     virtual float getRealValue() = 0;
     
     int getSensorID();
+    std::string GetName();
     Units::Unit getUnit();
     
 
@@ -31,6 +33,7 @@ protected:
      
     Platform* ptrPlatform;
     int sensor_ID;
+    std::string name;
     SensorSource source;
     Units::Unit unit;
 };

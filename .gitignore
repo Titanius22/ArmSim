@@ -1,13 +1,13 @@
 
 *.db-shm
-/ArmSim/Debug
+Debug
 *.exe
 *.pdb
 *.ipch
-.vs/ArmSim/v16/.suo
+*.suo
 *.opendb
 *.db-wal
 *.db
-.vs/ArmSim/v17/.suo
-.vs/ArmSim/FileContentIndex/read.lock
+*.lock
 *.vsidx
+*.csv

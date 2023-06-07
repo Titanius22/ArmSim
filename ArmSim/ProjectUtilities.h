@@ -1,6 +1,10 @@
 #ifndef PROJECTUTILITIES_H
 #define PROJECTUTILITIES_H
 
+#include <ctime>
+#include <iostream>
+#include <string>
+
 // include
 #ifdef _WIN32
     
@@ -36,6 +40,21 @@ void sleepcp_ms(uint32_t milliseconds) // Cross-platform sleep function
         assert(false)
         usleep(milliseconds * 1000);
     #endif // _WIN32
+}
+
+std::string gen_random_alphaNum(const size_t len) {
+    static const char alphanum[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
+    std::string tmp_s;
+    tmp_s.reserve(len);
+
+    for (size_t i = 0; i < len; ++i) {
+        tmp_s += alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+
+    return tmp_s;
 }
 
 

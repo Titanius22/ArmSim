@@ -1,6 +1,7 @@
 #include "SensorFactory.h"
 #include "Sensor_Actuator.h"
 #include "Sensor_SystemProperties.h"
+#include <string>
 
 SensorFactory::SensorFactory(Platform* _platform)
 	: ptrPlatform(_platform)
@@ -8,18 +9,18 @@ SensorFactory::SensorFactory(Platform* _platform)
 
 }
 
-void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Actuator* aPtr)
+void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, std::string _name, Actuator* aPtr)
 {
-	Sensor* newSensor = new Sensor_Actuator(this->ptrPlatform, _sensor_ID, aPtr);
+	Sensor* newSensor = new Sensor_Actuator(this->ptrPlatform, _sensor_ID, _name, aPtr);
 	
 	this->ptrPlatform->AddSensor(newSensor);
 }
 
-void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, Platform::System_Property _propertyToMeasure)
+void SensorFactory::CreateSensor_AndAddToPlatform(int _sensor_ID, std::string _name, Platform::System_Property _propertyToMeasure)
 {
 	Type_PtrToPlatformMethod funcPtrToReturn = this->get_PtrToFuncThatGetsSystemProperty(_propertyToMeasure);
 	
-	Sensor* newSensor = new Sensor_SystemProperties(this->ptrPlatform, _sensor_ID, _propertyToMeasure, funcPtrToReturn);
+	Sensor* newSensor = new Sensor_SystemProperties(this->ptrPlatform, _sensor_ID, _name, _propertyToMeasure, funcPtrToReturn);
 	
 	this->ptrPlatform->AddSensor(newSensor);
 }

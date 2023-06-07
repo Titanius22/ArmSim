@@ -4,6 +4,7 @@
 // include
 //#include "Platform.h" //leave commented out to prevent circular references
 #include "Units.h"
+#include <string>
 
 class Platform; // added to prevent circular references
 
@@ -21,7 +22,8 @@ public:
     virtual ~Actuator() = 0;
     Actuator() = delete; // We must call the special constructor
     Actuator(
-        Platform* _ptrPlatform, uint8_t _actuator_ID, ActuatorType _actuatorType,
+        Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name, 
+        ActuatorType _actuatorType,
         float _posX, float _posY, float _posZ
     );
 
@@ -30,6 +32,7 @@ public:
     virtual float getRealActuationValue() = 0;
     
     uint8_t getActuatorID();
+    std::string GetName();
     Units::Unit getUnit();
 
 protected:
@@ -38,6 +41,7 @@ protected:
     ActuatorType actuatorType;
     
     float posX, posY, posZ;
+    std::string name;
 
     float actuationValue; // maps to Command_Platform data
     Units::Unit unit;

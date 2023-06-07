@@ -1,7 +1,9 @@
+#include <string>
 #include "Platform.h"
 
-Platform::Platform()
+Platform::Platform(std::string _name)
 {
+	this->name = _name;
 	this->ang_pos = 0;
 	this->ang_vel = 0;
 	this->ang_acc = 0;
@@ -85,6 +87,11 @@ Actuator* Platform::GetPtrToActuator(int _actuatorID)
 
 	assert(returnPtr);
 	return returnPtr;
+}
+
+std::string Platform::GetName()
+{
+	return this->name;
 }
 
 
