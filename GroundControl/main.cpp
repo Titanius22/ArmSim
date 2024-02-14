@@ -9,7 +9,7 @@ int main()
     char dummy[500];
 
     // cause system to wait
-    std::cout << "Press ENTER when ready..."; // Type a number and press enter
+    std::cout << "Type anything, then press ENTER when ready..."; // Type a number and press enter
     std::cin >> dummy; // Get user input from the keyboard
 
     GroundControl* groundControl = new GroundControl();
