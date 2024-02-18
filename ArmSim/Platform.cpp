@@ -69,8 +69,6 @@ std::string Platform::GetName()
 	return this->name;
 }
 
-
-
 double Platform::GetSystemPos()
 {
 	return this->ang_pos;
