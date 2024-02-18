@@ -4,7 +4,7 @@
 // include
 #include "Platform.h"
 
-typedef float (Platform::* Type_PtrToPlatformMethod)(void);
+typedef double (Platform::* Type_PtrToPlatformMethod)(void);
 
 #endif 
 

@@ -11,8 +11,8 @@ ActuatorFactory::ActuatorFactory(Platform* _platform)
 
 void ActuatorFactory::CreateActuator_AndAddToPlatform(
 	uint8_t _actuator_ID, std::string _name,
-	float _posX, float _posY, float _posZ,
-	float _forceVecX, float _forceVecY, float _forceVecZ)
+	double _posX, double _posY, double _posZ,
+	double _forceVecX, double _forceVecY, double _forceVecZ)
 {
 	Actuator* newActuator = new Actuator_Linear(this->ptrPlatform, _actuator_ID, _name, Actuator::ActuatorType::JAB, _posX, _posY, _posZ, _forceVecX, _forceVecY, _forceVecZ);
 	

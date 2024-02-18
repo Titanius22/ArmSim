@@ -29,7 +29,7 @@ Type_PtrToPlatformMethod SensorFactory::get_PtrToFuncThatGetsSystemProperty(Plat
 {
 	// TODO: need to make return type better
 	
-	float (Platform::*funcPtrToReturn)(void);
+	double (Platform::*funcPtrToReturn)(void);
 
 	switch (_propertyToMeasure) {
 		case Platform::System_Property::ANG_POS:

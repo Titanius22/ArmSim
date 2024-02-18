@@ -1,14 +1,18 @@
 #include <string>
+#include <cmath>
 #include "Platform.h"
+#include "MathPhysics.h"
 
 Platform::Platform(std::string _name)
 {
 	this->name = _name;
-	this->ang_pos = 0;
+	this->SetAngPos_Absolute(0);
 	this->ang_vel = 0;
-	this->ang_acc = 0;
 
-	this->l = 0.2f;
+	this->l = 0.4f;
+
+	this->totalEnergy = GetKineticEnergy() + GetPotentialEnergy();
+	this->ang_acc = CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
 }
 
 void Platform::AddActuator(Actuator* ptr)
@@ -23,38 +27,9 @@ void Platform::AddSensor(Sensor* ptr)
 
 void Platform::PropagateModelDeltaTime(uint32_t timeStep_ms)
 {
-	float timeStep_sec = float(timeStep_ms) / 1000.0f;
-	
-	// sum the forces to calculate vel change
-	/*float erikIsDumb_cantDoPhysics = 0;
-	for (Actuator* actuator : this->actuatorList) {
-		erikIsDumb_cantDoPhysics += actuator->getCommandedActuationValue();
-	}
-	
-	this->erikVel += (erikIsDumb_cantDoPhysics * timeStep_sec);
+	double timeStep_sec = double(timeStep_ms) / 1000.0;
 
-	this->erikPos += timeStep_sec * this->erikVel;*/
-	
-	
-	// WE HAVE
-	this->ang_pos;
-	this->ang_vel;
-	this->ang_acc;
-	
-
-	// WE WANT
-	float ang_pos_next;
-	float ang_vel_next;
-	
-	
-	// WE GET THAT BY.........
-	ang_acc = -(g * cos(ang_pos)) / l;
-	ang_vel_next = (ang_acc * timeStep_sec) + ang_vel;
-	ang_pos_next = 0.5f * (ang_vel_next + ang_vel) * timeStep_sec;
-	
-
-	this->ang_pos = ang_pos_next;
-	this->ang_vel = ang_vel_next;
+	this->RK4_StepForward(timeStep_sec);
 }
 
 Sensor* Platform::GetPtrToSensor(int _sensorID)
@@ -96,17 +71,91 @@ std::string Platform::GetName()
 
 
 
-float Platform::GetSystemPos()
+double Platform::GetSystemPos()
 {
 	return this->ang_pos;
 }
 
-float Platform::GetSystemVel()
+double Platform::GetSystemVel()
 {
 	return this->ang_vel;
 }
 
-float Platform::GetSystemAcc()
+double Platform::GetSystemAcc()
 {
 	return this->ang_acc;
+}
+
+
+double Platform::GetPotentialEnergy()
+{
+	assert(this->ang_pos <= (MathPhysics::pi/2));
+	assert(this->ang_pos >= -(3/2 * MathPhysics::pi));
+	double h = this->l * sin(this->ang_pos);
+
+	return MathPhysics::CalaculatePotentialEnergy(m, h);
+}
+
+double Platform::GetKineticEnergy()
+{
+	return MathPhysics::CalaculateKineticEnergy(m, this->ang_vel * this->l);
+}
+
+
+void Platform::SetAngPos_Absolute(double newAngPos)
+{
+	const double minLimit = -(3.0f / 2.0f) * MathPhysics::pi;
+	const double maxLimit = (1.0f / 2.0f) * MathPhysics::pi;
+
+	double correctedVal = newAngPos;
+	
+	while ((correctedVal < minLimit) || (correctedVal > maxLimit))
+	{
+		if (correctedVal < minLimit)
+		{
+			correctedVal += (2.0f * MathPhysics::pi);
+		}
+		else if (correctedVal > maxLimit)
+		{
+			correctedVal -= (2.0f * MathPhysics::pi);
+		}
+		else
+		{
+			assert(false);
+		}
+	}
+
+	this->ang_pos = correctedVal;
+}
+
+void Platform::SetAngPos_Add(double deltaAngPosToApply)
+{
+	SetAngPos_Absolute(this->ang_pos + deltaAngPosToApply);
+}
+
+double Platform::CalaculateAngularAcceration(double theta, double omega)
+{
+	return -((MathPhysics::g / this->l) * cos(theta)) + (this->damping * -omega) + this->force_actuator;
+}
+
+void Platform::RK4_StepForward(double dt)
+{
+	double dw_k1 = dt * CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
+	double dtheta_k1 = dt * this->ang_vel;
+
+	double dw_k2 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k1 / 2.0), (this->ang_vel + dw_k1 / 2.0));
+	double dtheta_k2 = dt * (this->ang_vel + dw_k2 / 2.0);
+
+	double dw_k3 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k2 / 2.0), (this->ang_vel + dw_k2 / 2.0));
+	double dtheta_k3 = dt * (this->ang_vel + dw_k3 / 2.0);
+
+	double dw_k4 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k3), (this->ang_vel + dw_k3));
+	double dtheta_k4 = dt * (this->ang_vel + dw_k4);
+
+	double dw = (dw_k1 + (2 * dw_k2) + (2.0 * dw_k3) + dw_k4) / 6.0;
+	double dtheta = (dtheta_k1 + (2.0 * dtheta_k2) + (2.0 * dtheta_k3) + dtheta_k4) / 6.0;
+
+	this->ang_vel += dw;
+	this->SetAngPos_Add(dtheta);
+	this->ang_acc = CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
 }

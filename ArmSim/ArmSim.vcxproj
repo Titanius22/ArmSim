@@ -103,6 +103,7 @@
     <ClCompile Include="Actuator_Linear.cpp" />
     <ClCompile Include="Command_Platform.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathPhysics.cpp" />
     <ClCompile Include="PivotPoint.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlatformController.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="ActuatorFactory.h" />
     <ClInclude Include="Actuator_Linear.h" />
     <ClInclude Include="Command_Platform.h" />
+    <ClInclude Include="MathPhysics.h" />
     <ClInclude Include="PlatformController.h" />
     <ClInclude Include="ProjectUtilities.h" />
     <ClInclude Include="Sensor_Actuator.h" />

@@ -14,8 +14,8 @@ class Sensor_SystemProperties : public Sensor
 public:
     Sensor_SystemProperties(Platform* _ptrPlatform, int _sensor_ID, std::string _name, Platform::System_Property _propertyToMeasure, Type_PtrToPlatformMethod funcPtr);
 
-    float getSensorMeasurement() override;
-    float getRealValue() override;
+    double getSensorMeasurement() override;
+    double getRealValue() override;
 
 private:
     Platform::System_Property propertyToMeasure;

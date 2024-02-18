@@ -15,7 +15,7 @@ Command_Platform::Command_Platform(CommanndType _cmdType) // DO_NOTHING command
 	this->setCommandType(_cmdType);
 }
 
-Command_Platform::Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, float _actuatorValue) // CHANGE_ACTUATOR_VALUE command
+Command_Platform::Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, double _actuatorValue) // CHANGE_ACTUATOR_VALUE command
 {
 	this->setCommandType(_cmdType);
 	this->setActuatorID(_actuator_ID);
@@ -36,9 +36,9 @@ uint8_t Command_Platform::GetActuatorID() const
 	return pData[1];
 }
 
-float Command_Platform::GetActuatorValue() const
+double Command_Platform::GetActuatorValue() const
 {
-	float* pData = (float*)this->binCmd;
+	double* pData = (double*)this->binCmd;
 
 	return pData[1];
 }
@@ -65,9 +65,9 @@ void Command_Platform::setActuatorID(uint8_t _actuator_ID)
 	pData[1] = (uint8_t)_actuator_ID;
 }
 
-void Command_Platform::setActuatorValue(float _actuatorValue)
+void Command_Platform::setActuatorValue(double _actuatorValue)
 {
-	float* pData = (float*)this->binCmd;
+	double* pData = (double*)this->binCmd;
 
 	pData[1] = _actuatorValue;
 }

@@ -21,8 +21,8 @@ public:
     Sensor(Platform* _ptrPlatform, int _sensor_ID, std::string _name, SensorSource _source);
     virtual ~Sensor() = 0;
 
-    virtual float getSensorMeasurement() = 0;
-    virtual float getRealValue() = 0;
+    virtual double getSensorMeasurement() = 0;
+    virtual double getRealValue() = 0;
     
     int getSensorID();
     std::string GetName();

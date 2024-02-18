@@ -16,7 +16,7 @@ SimManager::SimManager()
 }
 
 void SimManager::Configure(){
-    this->cycleTimeStep_ms = 10;
+    this->cycleTimeStep_ms = 5;
     this->currentSimTime = 0;
 
     // create output file
@@ -42,19 +42,25 @@ void SimManager::Configure(){
         
 void SimManager::StartRun(){
     
-    Sensor* sensor1 = this->platform->GetPtrToSensor(0001);
-    Sensor* sensor2 = this->platform->GetPtrToSensor(0002);
-    Sensor* sensor3 = this->platform->GetPtrToSensor(0003);
+    //Sensor* sensor1 = this->platform->GetPtrToSensor(0001);
+    //Sensor* sensor2 = this->platform->GetPtrToSensor(0002);
+    //Sensor* sensor3 = this->platform->GetPtrToSensor(0003);
     //Actuator* actuator1 = this->platform->GetPtrToActuator(0001);
 
     PlatformController platController = PlatformController(this->platform);
     
     PerformanceTimer cycleTimer;
+
+    uint32_t cycleTimer_time_ms;
+    uint32_t remainingTimeToSleep_ms;
     
     
     int cycleCount = 0;
-    //float actuatorValue;
+    //double actuatorValue;
     Command_Platform command(Command_Platform::CommanndType::DO_NOTHING); // will not get used, just so that "command" can get defined outside the loop
+
+    // export data starting data values
+    this->ExportToFile(this->platform);
 
     // this is the main loop that handles each cycle
     while(true){
@@ -74,6 +80,8 @@ void SimManager::StartRun(){
         // TODO: call this->platform->updateDisturbance()
                 
         this->platform->PropagateModelDeltaTime(this->cycleTimeStep_ms);
+        this->currentSimTime += (double(this->cycleTimeStep_ms) / 1000);
+
 
         // TODO: call SendSensorData()
 
@@ -82,14 +90,15 @@ void SimManager::StartRun(){
         // TODO: export data and run visualizer
         this->ExportToFile(this->platform);
 
-        // TODO: handle_commands()
-
+        //// TODO: handle_commands()
+        //for (int i = 0; i < 900; i++) {
+        //    gen_random_alphaNum(12);
+        //}
 
 
         // stop update timer: -----------------------------------------
         cycleTimer.Toc();
-        uint32_t cycleTimer_time_ms = uint32_t(cycleTimer.TimeInSeconds() * 1000.0f);
-        uint32_t remainingTimeToSleep_ms;
+        cycleTimer_time_ms = uint32_t(cycleTimer.TimeInSeconds() * 1000.0f);
         if (this->cycleTimeStep_ms > cycleTimer_time_ms)
         {
             remainingTimeToSleep_ms = this->cycleTimeStep_ms - cycleTimer_time_ms;
@@ -100,23 +109,30 @@ void SimManager::StartRun(){
             remainingTimeToSleep_ms = 0;
         }
         
-        // sleep for remainder of time; this make its real time
-        sleepcp_ms(remainingTimeToSleep_ms);
+        if (realTimeLive)
+        {
+            // sleep for remainder of time; this make its real time
+            sleepcp_ms(remainingTimeToSleep_ms);
+        }
 
-        // Print loop time
-        //printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
-
-		if ((cycleCount > 0) && (cycleCount % 20 == 0))
+		if ((cycleCount > 0) && (cycleCount % (1000/this->cycleTimeStep_ms) == 0))
 		{
-			printf("Sensor1: %.4f m, Sensor2: %.4f m/s, Sensor3: %.4f m/s^2\n", // , Actuator1: % .0f m / s ^ 2 \n",
-				sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), sensor3->getSensorMeasurement()); // , actuator1->getCommandedActuationValue());
+            if (realTimeLive)
+            {
+                printf("ProccessTime: %d ms, WaitTime: %d ms \n", cycleTimer_time_ms, remainingTimeToSleep_ms);
+            }
+            else
+            {
+                printf("ProccessTime: %d ms \n", cycleTimer_time_ms);
+            }
+  //          printf("Sensor1: %.4f rad, Sensor2: %.4f rad/s, Sensor3: %.4f rad/s^2\n", // , Actuator1: % .0f m / s ^ 2 \n",
+		//		sensor1->getSensorMeasurement(), sensor2->getSensorMeasurement(), sensor3->getSensorMeasurement()); // , actuator1->getCommandedActuationValue());
 		}
 
         // Reset timer: -----------------------------------------
         cycleTimer.Reset();
 
         cycleCount++;
-        this->currentSimTime += (double(this->cycleTimeStep_ms) / 1000);
     }
 }
 

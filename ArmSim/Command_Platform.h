@@ -23,11 +23,11 @@ public:
     // Custom Constructors
     Command_Platform(void* _binCmd); // create from binary
     Command_Platform(CommanndType _cmdType); // DO_NOTHING
-    Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, float _actuatorValue); // CHANGE_ACTUATOR_VALUE
+    Command_Platform(CommanndType _cmdType, uint8_t _actuator_ID, double _actuatorValue); // CHANGE_ACTUATOR_VALUE
 
     CommanndType GetCommandType() const;
     uint8_t GetActuatorID() const;
-    float GetActuatorValue() const;
+    double GetActuatorValue() const;
 
     const void* GetCommandBits() const;
 
@@ -42,12 +42,12 @@ private:
     ((uint8_t) binCmd)[3] => blank
     
     Second 32 bits
-    ((float) binCmd)[1] => ActuatorValue
+    ((double) binCmd)[1] => ActuatorValue
     */
 
     void setCommandType(Command_Platform::CommanndType _cmdType);
     void setActuatorID(uint8_t _actuator_ID);
-    void setActuatorValue(float _actuatorValue);
+    void setActuatorValue(double _actuatorValue);
 };
 
 #endif 

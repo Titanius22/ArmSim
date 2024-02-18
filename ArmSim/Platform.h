@@ -38,9 +38,9 @@ public:
 
     std::string GetName();
     
-    float GetSystemPos();
-    float GetSystemVel();
-	float GetSystemAcc();
+    double GetSystemPos();
+    double GetSystemVel();
+	double GetSystemAcc();
 
 private:
     std::list<Actuator*> actuatorList;
@@ -49,15 +49,27 @@ private:
 
     std::string name;
 
-    float erikVel = 5;
-    float erikPos = 0;
+    double erikVel = 5;
+    double erikPos = 0;
 
-	float ang_acc;
-	float ang_pos;
-	float ang_vel;
+	double ang_acc;
+	double ang_pos;
+	double ang_vel;
 	
-	float l;
-	float const g = 9.81f;
+	double l;                  // length of pendulum
+    double const m = 1.0;     // mass
+    double damping = 0;              // damping
+    double force_actuator = 0; // force from an actuator
+
+    double totalEnergy;
+    double minPotentialEnergy;
+
+    double GetPotentialEnergy();
+    double GetKineticEnergy();
+    void SetAngPos_Absolute(double newAngPos);
+    void SetAngPos_Add(double deltaAngPosToApply);
+    double CalaculateAngularAcceration(double theta, double omega);
+    void RK4_StepForward(double dt);
 };
 
 #endif 
