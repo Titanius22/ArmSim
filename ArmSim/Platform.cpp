@@ -3,13 +3,13 @@
 #include "Platform.h"
 #include "MathPhysics.h"
 
-Platform::Platform(std::string _name)
+Platform::Platform(std::string _name, double _armLength)
 {
 	this->name = _name;
 	this->SetAngPos_Absolute(0);
 	this->ang_vel = 0;
 
-	this->l = 0.4f;
+	this->armLength = _armLength;
 
 	this->totalEnergy = GetKineticEnergy() + GetPotentialEnergy();
 	this->ang_acc = CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
@@ -89,14 +89,14 @@ double Platform::GetPotentialEnergy()
 {
 	assert(this->ang_pos <= (MathPhysics::pi/2));
 	assert(this->ang_pos >= -(3/2 * MathPhysics::pi));
-	double h = this->l * sin(this->ang_pos);
+	double h = this->armLength * sin(this->ang_pos);
 
 	return MathPhysics::CalaculatePotentialEnergy(m, h);
 }
 
 double Platform::GetKineticEnergy()
 {
-	return MathPhysics::CalaculateKineticEnergy(m, this->ang_vel * this->l);
+	return MathPhysics::CalaculateKineticEnergy(m, this->ang_vel * this->armLength);
 }
 
 
@@ -133,7 +133,26 @@ void Platform::SetAngPos_Add(double deltaAngPosToApply)
 
 double Platform::CalaculateAngularAcceration(double theta, double omega)
 {
-	return -((MathPhysics::g / this->l) * cos(theta)) + (this->damping * -omega) + this->force_actuator;
+	// TODO: maybe change to calculate this once per cycle and save as a class variable
+	double summedActuatorforceAtArmEnd = 0;
+	double equivForceAtEnd = 0;
+	double forceRatio = 0;
+
+	for (auto const& actuator : this->actuatorList) {
+		forceRatio = actuator->getPosOnArm() / this->armLength;
+		equivForceAtEnd = forceRatio * actuator->getRealActuationValue();
+
+		summedActuatorforceAtArmEnd += equivForceAtEnd;
+	}
+
+	// F = ma
+	// sum force of system      =  gravity force     - dampening        +  external force
+	// m*(l*alpha)              = -m*g*cos(theta)    - damp*(l*omega)   +  Actuator force
+
+	// solve for acc; divide (m*l)
+	// alpha                    = -(g/l)*cost(theta) - (damp*omega)/m   +  force_act/(m*l)
+
+	return -((MathPhysics::g / this->armLength) * cos(theta)) + ((this->damping * -omega)/this->m) + (summedActuatorforceAtArmEnd/(this->m * this->armLength));
 }
 
 void Platform::RK4_StepForward(double dt)

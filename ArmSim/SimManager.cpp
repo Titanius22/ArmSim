@@ -22,21 +22,20 @@ void SimManager::Configure(){
     // create output file
     this->exportFile.open("ArmSim_export_" + gen_random_alphaNum(12) + ".csv");
             
-    this->platform = new Platform("Arm");
+    const double armLength = 0.4;
+    this->platform = new Platform("Arm", armLength);
     
     ActuatorFactory* pActuatorFactory = new ActuatorFactory(this->platform);
     pActuatorFactory->CreateActuator_AndAddToPlatform(
         0001, "Actuator1",
-        0.0f, 1.0f, 2.0f,
-        1.0f, 0.0f, 0.0f);
-    this->platform->GetPtrToActuator(0001)->setCommandedActuationValue(2.0f);
+        armLength);
+    //this->platform->GetPtrToActuator(0001)->setCommandedActuationValue(2.0f);
 
     SensorFactory* pSensorFactory = new SensorFactory(this->platform);
-	  pSensorFactory->CreateSensor_AndAddToPlatform(0001, "theta", Platform::System_Property::ANG_POS);
-	  pSensorFactory->CreateSensor_AndAddToPlatform(0002, "theta_dot", Platform::System_Property::ANG_VEL);
- 	  pSensorFactory->CreateSensor_AndAddToPlatform(0003, "theta_dot_dot", Platform::System_Property::ANG_ACC);
-    //pSensorFactory->CreateSensor_AndAddToPlatform(0004, this->platform->GetPtrToActuator(0001));
-
+	pSensorFactory->CreateSensor_AndAddToPlatform(0001, "theta", Platform::System_Property::ANG_POS);
+	pSensorFactory->CreateSensor_AndAddToPlatform(0002, "omega", Platform::System_Property::ANG_VEL);
+ 	pSensorFactory->CreateSensor_AndAddToPlatform(0003, "alpha", Platform::System_Property::ANG_ACC);
+    pSensorFactory->CreateSensor_AndAddToPlatform(0004, "actuator", this->platform->GetPtrToActuator(0001));
 
 }
         

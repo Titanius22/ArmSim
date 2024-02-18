@@ -26,7 +26,7 @@ public:
     };
     
     Platform() = delete;
-    Platform(std::string _name);
+    Platform(std::string _name, double _armLength);
 
     void AddActuator(Actuator* a);
     void AddSensor(Sensor* s);
@@ -49,14 +49,11 @@ private:
 
     std::string name;
 
-    double erikVel = 5;
-    double erikPos = 0;
-
-	  double ang_acc;
-	  double ang_pos;
-	  double ang_vel;
+    double ang_acc;
+	double ang_pos;
+	double ang_vel;
 	
-	  double l;                  // length of pendulum
+	double armLength;          // length of pendulum
     double const m = 1.0;      // mass
     double damping = 0;        // damping
     double force_actuator = 0; // force from an actuator

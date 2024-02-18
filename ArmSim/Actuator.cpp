@@ -5,7 +5,7 @@
 Actuator::Actuator(
     Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name,
     ActuatorType _actuatorType,
-    double _posX, double _posY, double _posZ)
+    double _posOnArm)
 {
     this->ptrPlatform = _ptrPlatform;
     this->actuator_ID = _actuator_ID;
@@ -14,9 +14,10 @@ Actuator::Actuator(
 
     this->actuatorType = _actuatorType;
 
-    this->posX = _posX;
-    this->posY = _posY;
-    this->posZ = _posZ;
+    this->posOnArm = _posOnArm;
+    //this->posX = _posX;
+    //this->posY = _posY;
+    //this->posZ = _posZ;
 
     this->actuationValue = 0.0f;
     this->unit = Units::Unit::Undefined;
@@ -25,6 +26,12 @@ Actuator::Actuator(
 Actuator::~Actuator()
 {
 
+}
+
+// TODO: make this class virtual and have specialized classes for each type of actuator. This function should be defined by the specialized class, not here.
+double Actuator::getRealActuationValue()
+{
+    return this->actuationValue;
 }
 
 double Actuator::getCommandedActuationValue()
@@ -50,4 +57,9 @@ std::string Actuator::GetName()
 Units::Unit Actuator::getUnit()
 {
     return this->unit;
+}
+
+double Actuator::getPosOnArm()
+{
+    return this->posOnArm;
 }

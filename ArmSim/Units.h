@@ -8,9 +8,7 @@ class Units
 {
 public:
     enum class Unit {
-        ZoomZoom,
-        RollyRolly,
-        WavyWavy,
+        Newtons,
 
         Undefined
     };
