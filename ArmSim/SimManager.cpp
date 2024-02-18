@@ -35,7 +35,9 @@ void SimManager::Configure(){
 	pSensorFactory->CreateSensor_AndAddToPlatform(0001, "theta", Platform::System_Property::ANG_POS);
 	pSensorFactory->CreateSensor_AndAddToPlatform(0002, "omega", Platform::System_Property::ANG_VEL);
  	pSensorFactory->CreateSensor_AndAddToPlatform(0003, "alpha", Platform::System_Property::ANG_ACC);
-    pSensorFactory->CreateSensor_AndAddToPlatform(0004, "actuator", this->platform->GetPtrToActuator(0001));
+    pSensorFactory->CreateSensor_AndAddToPlatform(0004, "Actuator1", this->platform->GetPtrToActuator(0001));
+
+
 
 }
         
@@ -134,7 +136,6 @@ void SimManager::StartRun(){
         cycleTimer.Reset();
 
         cycleCount++;
-        this->currentSimTime += (double(this->cycleTimeStep_ms) / 1000);
     }
 }
 

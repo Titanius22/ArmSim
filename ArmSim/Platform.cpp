@@ -64,6 +64,16 @@ Actuator* Platform::GetPtrToActuator(int _actuatorID)
 	return returnPtr;
 }
 
+std::list<Sensor*>::iterator Platform::GetSensorIterator()
+{
+	return (this->sensorList).begin();
+}
+
+std::list<Actuator*>::iterator Platform::GetActuatorIterator()
+{
+	return (this->actuatorList).begin();
+}
+
 std::string Platform::GetName()
 {
 	return this->name;
@@ -159,20 +169,20 @@ void Platform::RK4_StepForward(double dt)
 {
 	// see: https://gist.githubusercontent.com/Twinklebear/3935244/raw/2e96c1e4f7fae9362f3e77f15dc486ff5512035b/code.cpp
 	
-	double dw_k1 = dt * CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
-	double dtheta_k1 = dt * this->ang_vel;
+	double dtheta_k1 = this->ang_vel;
+	double dw_k1 = CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
+	
+	double dw_k2 = CalaculateAngularAcceration((this->ang_pos + (dtheta_k1*dt) / 2.0), (this->ang_vel + (dw_k1*dt) / 2.0));
+	double dtheta_k2 = this->ang_vel + ((dw_k2 * dt) / 2.0);
 
-	double dw_k2 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k1 / 2.0), (this->ang_vel + dw_k1 / 2.0));
-	double dtheta_k2 = dt * (this->ang_vel + dw_k2 / 2.0);
+	double dw_k3 = CalaculateAngularAcceration((this->ang_pos + (dtheta_k2 * dt) / 2.0), (this->ang_vel + (dw_k2 * dt) / 2.0));
+	double dtheta_k3 = this->ang_vel + (dw_k3 * dt) / 2.0;
+	
+	double dw_k4 = CalaculateAngularAcceration((this->ang_pos + (dtheta_k3 * dt)), (this->ang_vel + (dw_k3 * dt)));
+	double dtheta_k4 = this->ang_vel + (dw_k4 * dt);
 
-	double dw_k3 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k2 / 2.0), (this->ang_vel + dw_k2 / 2.0));
-	double dtheta_k3 = dt * (this->ang_vel + dw_k3 / 2.0);
-
-	double dw_k4 = dt * CalaculateAngularAcceration((this->ang_pos + dtheta_k3), (this->ang_vel + dw_k3));
-	double dtheta_k4 = dt * (this->ang_vel + dw_k4);
-
-	double dw = (dw_k1 + (2 * dw_k2) + (2.0 * dw_k3) + dw_k4) / 6.0;
-	double dtheta = (dtheta_k1 + (2.0 * dtheta_k2) + (2.0 * dtheta_k3) + dtheta_k4) / 6.0;
+	double dw = dt * (dw_k1 + (2 * dw_k2) + (2.0 * dw_k3) + dw_k4) / 6.0;
+	double dtheta = dt * (dtheta_k1 + (2.0 * dtheta_k2) + (2.0 * dtheta_k3) + dtheta_k4) / 6.0;
 
 	this->ang_vel += dw;
 	this->SetAngPos_Add(dtheta);

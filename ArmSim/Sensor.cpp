@@ -1,7 +1,8 @@
 #include "Platform.h"
 #include <string>
 
-Sensor::Sensor(Platform* _ptrPlatform, int _sensor_ID, std::string _name, SensorSource _source)
+Sensor::Sensor(Platform* _ptrPlatform, int _sensor_ID, std::string _name, SensorSource _source):
+	Device(Device::DeviceType::SENSOR)
 {
 	this->ptrPlatform = _ptrPlatform;
 	this->sensor_ID = _sensor_ID;
@@ -28,7 +29,7 @@ int Sensor::getSensorID()
 	return this->sensor_ID;
 }
 
-Units::Unit Sensor::getUnit()
+Units::Unit Sensor::GetUnit()
 {
 	return this->unit;
 }

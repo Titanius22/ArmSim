@@ -4,7 +4,7 @@
 // include
 #include <list>
 #include <string>
-#include "Sensor.h" //leave commented out to prevent circular references
+#include "Sensor.h"
 #include "Actuator.h"
 #include "PivotPoint.h"
 
@@ -30,14 +30,14 @@ public:
 
     void AddActuator(Actuator* a);
     void AddSensor(Sensor* s);
+    Sensor* GetPtrToSensor(int _sensorID);
+    Actuator* GetPtrToActuator(int _actuatorID);
+    std::list<Sensor*>::iterator GetSensorIterator();
+    std::list<Actuator*>::iterator GetActuatorIterator();
 
     void PropagateModelDeltaTime(uint32_t timeStep_ms);
 
-    Sensor* GetPtrToSensor(int _sensorID);
-    Actuator* GetPtrToActuator(int _actuatorID);
-
     std::string GetName();
-    
     double GetSystemPos();
     double GetSystemVel();
 	double GetSystemAcc();

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MATHPHYSICS_H
+#define MATHPHYSICS_H
+
 class MathPhysics
 {
 public:
@@ -11,3 +13,5 @@ public:
 	static double CalaculateKineticEnergy(double m, double v);
 	static double CalaculateV_viaEnergy(double totalEnergy, double potentialEnergy, double m);
 };
+
+#endif 

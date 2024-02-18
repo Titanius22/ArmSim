@@ -5,7 +5,8 @@
 Actuator::Actuator(
     Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name,
     ActuatorType _actuatorType,
-    double _posOnArm)
+    double _posOnArm) :
+    Device(Device::DeviceType::ACTUATOR)
 {
     this->ptrPlatform = _ptrPlatform;
     this->actuator_ID = _actuator_ID;
@@ -54,7 +55,7 @@ std::string Actuator::GetName()
     return this->name;
 }
 
-Units::Unit Actuator::getUnit()
+Units::Unit Actuator::GetUnit()
 {
     return this->unit;
 }

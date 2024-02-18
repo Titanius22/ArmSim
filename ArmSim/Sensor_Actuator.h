@@ -13,6 +13,8 @@ public:
     Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, std::string _name, Actuator* aPtr);
 
     double getSensorMeasurement() override;
+
+protected:
     double getRealValue() override;
 
 
