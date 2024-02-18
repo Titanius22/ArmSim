@@ -140,6 +140,8 @@ double Platform::CalaculateAngularAcceration(double theta, double omega)
 
 void Platform::RK4_StepForward(double dt)
 {
+	// see: https://gist.githubusercontent.com/Twinklebear/3935244/raw/2e96c1e4f7fae9362f3e77f15dc486ff5512035b/code.cpp
+	
 	double dw_k1 = dt * CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
 	double dtheta_k1 = dt * this->ang_vel;
 
