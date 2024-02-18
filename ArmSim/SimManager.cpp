@@ -170,39 +170,6 @@ void SimManager::ExportToFile(Platform* _platform)
         this->exportFile << int(actuator->getActuatorID()) << ",";
         this->exportFile << actuator->getRealActuationValue() << ",";
     }
-}
-
-void SimManager::ExportToFile(Platform* _platform)
-{
-    // exports 1 row at a time
-    
-    if(!this->exportFile)
-    {
-        // TODO: how should this be handled
-        assert(false);
-    }
-
-    // print simTime column
-    this->exportFile << this->currentSimTime << ",";
-
-    // print platform name column
-    this->exportFile << _platform->GetName() << ",";
-
-    // print sensor data columns
-    for (Sensor* sensor : _platform->sensorList)
-    {
-        this->exportFile << sensor->GetName() << ",";
-        this->exportFile << sensor->getSensorID() << ",";
-        this->exportFile << sensor->getRealValue() << ",";
-    }
-
-    // print actuator data columns
-    for (Actuator* actuator : _platform->actuatorList)
-    {
-        this->exportFile << actuator->GetName() << ",";
-        this->exportFile << int(actuator->getActuatorID()) << ",";
-        this->exportFile << actuator->getRealActuationValue() << ",";
-    }
 
     // end of row
     this->exportFile << endl;
