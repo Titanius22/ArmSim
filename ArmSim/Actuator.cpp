@@ -5,7 +5,7 @@
 Actuator::Actuator(
     Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name,
     ActuatorType _actuatorType,
-    float _posX, float _posY, float _posZ)
+    double _posX, double _posY, double _posZ)
 {
     this->ptrPlatform = _ptrPlatform;
     this->actuator_ID = _actuator_ID;
@@ -27,12 +27,12 @@ Actuator::~Actuator()
 
 }
 
-float Actuator::getCommandedActuationValue()
+double Actuator::getCommandedActuationValue()
 {
     return this->actuationValue;
 }
 
-void Actuator::setCommandedActuationValue(float newVal)
+void Actuator::setCommandedActuationValue(double newVal)
 {
     this->actuationValue = newVal;
 }

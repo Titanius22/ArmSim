@@ -1,8 +1,8 @@
 #include "PivotPoint.h"
 
 PivotPoint::PivotPoint(
-    float _posX, float _posY, float _posZ,
-    float _rotAxX, float _rotAxY, float _rotAxZ) :
+    double _posX, double _posY, double _posZ,
+    double _rotAxX, double _rotAxY, double _rotAxZ) :
     posX(_posX), posY(_posY), posZ(_posZ),
     rotAxX(_rotAxX), rotAxY(_rotAxY), rotAxZ(_rotAxZ)
 {}

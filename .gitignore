@@ -1,12 +1,13 @@
 
 *.db-shm
+Debug
 *.exe
 *.pdb
 *.ipch
 *.suo
-Debug
+*.opendb
 *.db-wal
 *.db
-*.vsidx
-*.opendb
 *.lock
+*.vsidx
+*.csv

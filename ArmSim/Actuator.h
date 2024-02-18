@@ -24,12 +24,12 @@ public:
     Actuator(
         Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name, 
         ActuatorType _actuatorType,
-        float _posX, float _posY, float _posZ
+        double _posX, double _posY, double _posZ
     );
 
-    float getCommandedActuationValue();
-    void setCommandedActuationValue(float newVal);
-    virtual float getRealActuationValue() = 0;
+    double getCommandedActuationValue();
+    void setCommandedActuationValue(double newVal);
+    virtual double getRealActuationValue() = 0;
     
     uint8_t getActuatorID();
     std::string GetName();
@@ -40,10 +40,10 @@ protected:
     uint8_t actuator_ID;
     ActuatorType actuatorType;
     
-    float posX, posY, posZ;
+    double posX, posY, posZ;
     std::string name;
 
-    float actuationValue; // maps to Command_Platform data
+    double actuationValue; // maps to Command_Platform data
     Units::Unit unit;
     
 };

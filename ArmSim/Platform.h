@@ -17,12 +17,12 @@ friend class SimManager;
 
 public:
     enum class System_Property { // TODO: add units associated with the properties
-        ARM_ANGLE,
         OtherStuff,
         MoreStuff,
 
-        ERIK_VEL,
-        ERIK_POS
+        ANG_VEL,
+        ANG_POS,
+		ANG_ACC
     };
     
     Platform() = delete;
@@ -38,8 +38,9 @@ public:
 
     std::string GetName();
     
-    float ErikGetSystemPos();
-    float ErikGetSystemVel();
+    double GetSystemPos();
+    double GetSystemVel();
+	double GetSystemAcc();
 
 private:
     std::list<Actuator*> actuatorList;
@@ -48,8 +49,27 @@ private:
 
     std::string name;
 
-    float erikVel = 5;
-    float erikPos = 0;
+    double erikVel = 5;
+    double erikPos = 0;
+
+	  double ang_acc;
+	  double ang_pos;
+	  double ang_vel;
+	
+	  double l;                  // length of pendulum
+    double const m = 1.0;      // mass
+    double damping = 0;        // damping
+    double force_actuator = 0; // force from an actuator
+
+    double totalEnergy;
+    double minPotentialEnergy;
+
+    double GetPotentialEnergy();
+    double GetKineticEnergy();
+    void SetAngPos_Absolute(double newAngPos);
+    void SetAngPos_Add(double deltaAngPosToApply);
+    double CalaculateAngularAcceration(double theta, double omega);
+    void RK4_StepForward(double dt);
 };
 
 #endif 

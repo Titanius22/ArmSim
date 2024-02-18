@@ -73,6 +73,9 @@
     <ClCompile Include="PlatformController.cpp">
       <Filter>Source Files\Commanding</Filter>
     </ClCompile>
+    <ClCompile Include="MathPhysics.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="Command_Platform.h">
       <Filter>Source Files\Commanding</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysics.h">
+      <Filter>Source Files\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

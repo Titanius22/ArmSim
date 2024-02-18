@@ -4,8 +4,8 @@
 
 Actuator_Linear::Actuator_Linear(
     Platform* _ptrPlatform, uint8_t _actuator_ID, std::string _name, ActuatorType _actuatorType,
-    float _posX, float _posY, float _posZ,
-    float _forceVecX, float _forceVecY, float _forceVecZ
+    double _posX, double _posY, double _posZ,
+    double _forceVecX, double _forceVecY, double _forceVecZ
 ) :
     Actuator(_ptrPlatform, _actuator_ID, _name, _actuatorType, _posX, _posY, _posZ),
     forceVecX(_forceVecX), forceVecY(_forceVecY), forceVecZ(_forceVecZ)
@@ -13,7 +13,7 @@ Actuator_Linear::Actuator_Linear(
     
 }
 
-float Actuator_Linear::getRealActuationValue()
+double Actuator_Linear::getRealActuationValue()
 {
     return this->actuationValue;
 }

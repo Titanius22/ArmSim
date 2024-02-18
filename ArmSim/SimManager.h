@@ -13,6 +13,7 @@ private:
     double currentSimTime;
     Platform* platform;
     std::ofstream exportFile;
+    bool realTimeLive = false;
 
 public:
     SimManager();

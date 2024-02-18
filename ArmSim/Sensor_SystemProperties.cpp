@@ -13,13 +13,13 @@ Sensor_SystemProperties::Sensor_SystemProperties(
 	this->ptrToPlatformMethodThatGetsSystemProperty = funcPtr;
 }
 
-float Sensor_SystemProperties::getSensorMeasurement()
+double Sensor_SystemProperties::getSensorMeasurement()
 {
 	// TODO: add latency, accuracy, etc...
 	return getRealValue();
 }
 
-float Sensor_SystemProperties::getRealValue()
+double Sensor_SystemProperties::getRealValue()
 {
 	return (*(this->ptrPlatform).*(this->ptrToPlatformMethodThatGetsSystemProperty))();
 }

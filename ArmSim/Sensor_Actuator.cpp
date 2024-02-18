@@ -8,13 +8,13 @@ Sensor_Actuator::Sensor_Actuator(Platform* _ptrPlatform, int _sensor_ID, std::st
 
 }
 
-float Sensor_Actuator::getSensorMeasurement()
+double Sensor_Actuator::getSensorMeasurement()
 {
 	// TODO: add latency, accuracy, etc...
 	return this->ptrActuator->getRealActuationValue();
 }
 
-float Sensor_Actuator::getRealValue()
+double Sensor_Actuator::getRealValue()
 {
 	return this->ptrActuator->getRealActuationValue();
 }

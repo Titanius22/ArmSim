@@ -29,16 +29,18 @@ Type_PtrToPlatformMethod SensorFactory::get_PtrToFuncThatGetsSystemProperty(Plat
 {
 	// TODO: need to make return type better
 	
-	float (Platform::*funcPtrToReturn)(void);
+	double (Platform::*funcPtrToReturn)(void);
 
 	switch (_propertyToMeasure) {
-		case Platform::System_Property::ERIK_POS:
-			funcPtrToReturn = &Platform::ErikGetSystemPos;
+		case Platform::System_Property::ANG_POS:
+			funcPtrToReturn = &Platform::GetSystemPos;
 			break;
-		case Platform::System_Property::ERIK_VEL:
-			funcPtrToReturn = &Platform::ErikGetSystemVel;
+		case Platform::System_Property::ANG_VEL:
+			funcPtrToReturn = &Platform::GetSystemVel;
 			break;
-		case Platform::System_Property::ARM_ANGLE:
+		case Platform::System_Property::ANG_ACC:
+			funcPtrToReturn = &Platform::GetSystemAcc;
+			break;
 		case Platform::System_Property::OtherStuff:
 		case Platform::System_Property::MoreStuff:
 		default:

@@ -12,8 +12,8 @@ public:
 
     void CreateActuator_AndAddToPlatform( // Actuator_Linear
         uint8_t _actuator_ID, std::string _name,
-        float _posX, float _posY, float _posZ,
-        float _forceVecX, float _forceVecY, float _forceVecZ);
+        double _posX, double _posY, double _posZ,
+        double _forceVecX, double _forceVecY, double _forceVecZ);
 
 private:    
     Platform* ptrPlatform;
