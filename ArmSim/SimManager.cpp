@@ -17,7 +17,7 @@ SimManager::SimManager()
 }
 
 void SimManager::Configure(){
-    this->cycleTimeStep_ms = 5;
+    this->cycleTimeStep_ms = 10;
     this->currentSimTime = 0;
 
     // create output file

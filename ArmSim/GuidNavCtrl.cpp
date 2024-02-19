@@ -84,6 +84,7 @@ void GuidNavCtrl::SolveAndApplyNextSolution()
 
 	double theta = this->sensorMap[GuidNavCtrl::GncSensorMapping::SystemTheta]->getSensorMeasurement();
 	
+	double commandedThrust = 0;
 	if ((theta > minLimit) && (theta < maxLimit))
 	{
 		double omega = this->sensorMap[GuidNavCtrl::GncSensorMapping::SystemOmega]->getSensorMeasurement();
@@ -92,13 +93,13 @@ void GuidNavCtrl::SolveAndApplyNextSolution()
 		{
 			directionSign = -1;
 		}
-		else if (std::signbit(omega)) // positive number; clockwise
+		else // positive number; clockwise
 		{
 			directionSign = 1;
 		}
-		// else exactly zero
 		directionSign *= -1;  // Want the force to be opposite of vel to slow it down
 
-		this->actuatorMap[GuidNavCtrl::GncActuatorMapping::SystemActuator_Main]->setCommandedActuationValue(directionSign * 5);
+		commandedThrust = directionSign * 5;
 	}
+	this->actuatorMap[GuidNavCtrl::GncActuatorMapping::SystemActuator_Main]->setCommandedActuationValue(commandedThrust);
 }
