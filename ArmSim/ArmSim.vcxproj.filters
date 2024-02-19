@@ -32,6 +32,9 @@
     <Filter Include="Source Files\Commanding">
       <UniqueIdentifier>{6a145761-f18a-44b3-bdb7-933d5dca171e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GNC">
+      <UniqueIdentifier>{8d2d8b93-2f33-4f47-8a6a-028d331f8e55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="GuidNavCtrl.cpp">
+      <Filter>Source Files\GNC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="Device.h">
       <Filter>Source Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="GuidNavCtrl.h">
+      <Filter>Source Files\GNC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

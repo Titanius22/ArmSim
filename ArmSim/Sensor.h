@@ -29,6 +29,7 @@ public:
     int getSensorID();
     std::string GetName() override;
     Units::Unit GetUnit() override;
+    virtual SensorSource GetSensorSource() final;
     
 
 protected:

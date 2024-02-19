@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include "Platform.h"
+#include "GuidNavCtrl.h"
 
 class SimManager
 {
@@ -12,6 +13,7 @@ private:
     uint32_t cycleTimeStep_ms;
     double currentSimTime;
     Platform* platform;
+    GuidNavCtrl* pGuidNavCtrl;
     std::ofstream exportFile;
     bool realTimeLive = false;
 

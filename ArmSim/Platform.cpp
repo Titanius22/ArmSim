@@ -17,11 +17,13 @@ Platform::Platform(std::string _name, double _armLength)
 
 void Platform::AddActuator(Actuator* ptr)
 {
+	assert(this->gncInialized == false); //setup error, stuff should not be added after GNC initialzes
 	this->actuatorList.push_back(ptr);
 }
 
 void Platform::AddSensor(Sensor* ptr)
 {
+	assert(this->gncInialized == false); //setup error, stuff should not be added after GNC initialzes
 	this->sensorList.push_back(ptr);
 }
 
@@ -64,14 +66,14 @@ Actuator* Platform::GetPtrToActuator(int _actuatorID)
 	return returnPtr;
 }
 
-std::list<Sensor*>::iterator Platform::GetSensorIterator()
+std::list<Sensor*> Platform::GetSensorList() const
 {
-	return (this->sensorList).begin();
+	return this->sensorList;
 }
 
-std::list<Actuator*>::iterator Platform::GetActuatorIterator()
+std::list<Actuator*> Platform::GetActuatorList() const
 {
-	return (this->actuatorList).begin();
+	return this->actuatorList;
 }
 
 std::string Platform::GetName()
@@ -187,4 +189,9 @@ void Platform::RK4_StepForward(double dt)
 	this->ang_vel += dw;
 	this->SetAngPos_Add(dtheta);
 	this->ang_acc = CalaculateAngularAcceration(this->ang_pos, this->ang_vel);
+}
+
+void Platform::MarkThatGncHasInitialized()
+{
+	this->gncInialized = true;
 }

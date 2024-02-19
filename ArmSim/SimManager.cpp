@@ -6,6 +6,7 @@
 #include "SensorFactory.h"
 #include "ActuatorFactory.h"
 #include "PlatformController.h"
+#include "GuidNavCtrl.h"
 
 #include <fstream>
 #include <iostream>
@@ -37,8 +38,9 @@ void SimManager::Configure(){
  	pSensorFactory->CreateSensor_AndAddToPlatform(0003, "alpha", Platform::System_Property::ANG_ACC);
     pSensorFactory->CreateSensor_AndAddToPlatform(0004, "Actuator1", this->platform->GetPtrToActuator(0001));
 
-
-
+    // configure GNC
+    this->pGuidNavCtrl = new GuidNavCtrl(this->platform);
+    pGuidNavCtrl->Initialize();
 }
         
 void SimManager::StartRun(){
@@ -87,6 +89,7 @@ void SimManager::StartRun(){
         // TODO: call SendSensorData()
 
         // TODO: Run FSW/GNC step
+        this->pGuidNavCtrl->SolveAndApplyNextSolution();
 
         // TODO: export data and run visualizer
         this->ExportToFile(this->platform);

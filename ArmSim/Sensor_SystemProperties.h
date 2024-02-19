@@ -16,6 +16,7 @@ public:
 
     double getSensorMeasurement() override;
     double getRealValue() override;
+    Platform::System_Property GetPropertyToMeasure() const;
 
 private:
     Platform::System_Property propertyToMeasure;

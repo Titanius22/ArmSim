@@ -34,4 +34,9 @@ Units::Unit Sensor::GetUnit()
 	return this->unit;
 }
 
+Sensor::SensorSource Sensor::GetSensorSource()
+{
+	return this->source;
+}
+
 // --- End of File ---

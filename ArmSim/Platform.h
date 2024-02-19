@@ -32,8 +32,8 @@ public:
     void AddSensor(Sensor* s);
     Sensor* GetPtrToSensor(int _sensorID);
     Actuator* GetPtrToActuator(int _actuatorID);
-    std::list<Sensor*>::iterator GetSensorIterator();
-    std::list<Actuator*>::iterator GetActuatorIterator();
+    std::list<Sensor*> GetSensorList() const;
+    std::list<Actuator*> GetActuatorList() const;
 
     void PropagateModelDeltaTime(uint32_t timeStep_ms);
 
@@ -41,6 +41,8 @@ public:
     double GetSystemPos();
     double GetSystemVel();
 	double GetSystemAcc();
+    
+    void MarkThatGncHasInitialized();
 
 private:
     std::list<Actuator*> actuatorList;
@@ -60,6 +62,8 @@ private:
 
     double totalEnergy;
     double minPotentialEnergy;
+
+    bool gncInialized = false; // used to ensure that stuff doesn't get added to the plafrom after GNC is initialized
 
     double GetPotentialEnergy();
     double GetKineticEnergy();

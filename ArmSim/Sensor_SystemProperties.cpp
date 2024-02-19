@@ -23,3 +23,9 @@ double Sensor_SystemProperties::getRealValue()
 {
 	return (*(this->ptrPlatform).*(this->ptrToPlatformMethodThatGetsSystemProperty))();
 }
+
+
+Platform::System_Property Sensor_SystemProperties::GetPropertyToMeasure() const
+{
+	return this->propertyToMeasure;
+}
